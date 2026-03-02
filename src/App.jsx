@@ -621,7 +621,7 @@ export default function App() {
             <div onClick={e=>e.stopPropagation()} style={{ position:"absolute", left:0, top:0, bottom:0, width:260, background:"linear-gradient(160deg,#11112a,#0a0a18)", padding:20, animation:"slideInLeft 0.3s ease", borderRight:"2px solid #7c4dff44", overflowY:"auto" }}>
               <div style={{ fontSize:26, marginBottom:24, fontFamily:"'Oswald',sans-serif" }}>🥭 <span style={{ color:"#f90" }}>MANGO</span></div>
               {["🏠 Home","🏏 Cricket","⚽ Football","🎾 Tennis","🏀 Basketball","🐴 Racing","🎰 Casino","🎲 Games","💰 Promotions","👤 My Account","📞 Support","⚙️ Settings"].map(item => (
-                <div key={item} className="sidebar-item" style={{ padding:"12px 10px", borderRadius:8, cursor:"pointer", fontSize:14, fontWeight:600, color:"#ccc", borderBottom:"1px solid #ffffff07", transition:"all 0.2s", paddingLeft:10 }}>{item}</div>
+                <div key={item} className="sidebar-item" onClick={()=>openWhatsApp(`Hello, I want to know more about ${item.replace(/^.+? /,"")} on MangoPlay!`)} style={{ padding:"12px 10px", borderRadius:8, cursor:"pointer", fontSize:14, fontWeight:600, color:"#ccc", borderBottom:"1px solid #ffffff07", transition:"all 0.2s", paddingLeft:10 }}>{item}</div>
               ))}
             </div>
           </div>
@@ -636,7 +636,7 @@ export default function App() {
         {/* ═══ SPORT TABS ═══ */}
         <div style={{ display:"flex", overflowX:"auto", background:"#16162e", padding:"4px 6px", gap:4, borderBottom:"2px solid #7c4dff22" }}>
           {SPORT_TABS.map((tab, i) => (
-            <button key={tab.label} className="sport-tab" onClick={e=>{setActiveTab(tab.label);addRipple(e);}}
+            <button key={tab.label} className="sport-tab" onClick={e=>{setActiveTab(tab.label); addRipple(e); openWhatsApp(`Hello, I want to play ${tab.label} on MangoPlay!`);}}
               style={{ flexShrink:0, padding:"8px 12px", background:activeTab===tab.label?"linear-gradient(135deg,#7c4dff,#b44dff)":"transparent", border:"none", color:activeTab===tab.label?"#fff":"#888", fontWeight:700, fontSize:11, borderRadius:8, cursor:"pointer", display:"flex", flexDirection:"column", alignItems:"center", gap:2, minWidth:62, transition:"all 0.2s", animation:`fadeUp 0.4s ease ${i*0.06}s both`, boxShadow:activeTab===tab.label?"0 0 14px #7c4dff88":"none" }}>
               <span style={{ fontSize:18 }}>{tab.icon}</span>
               <span>{tab.label}</span>
@@ -683,13 +683,13 @@ export default function App() {
         {/* ═══ MENU BUTTONS ═══ */}
         <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, padding:"4px 10px" }}>
           {MENU_ITEMS.map((item, i) => (
-            <button key={item.label} className="menu-btn" onClick={e=>{setActiveMenu(item.label);addRipple(e);}}
+            <button key={item.label} className="menu-btn" onClick={e=>{setActiveMenu(item.label); addRipple(e); openWhatsApp(`Hello, I want to know more about ${item.label} on MangoPlay!`);}}
               style={{ background:activeMenu===item.label?"linear-gradient(90deg,#7c4dff,#b44dff)":"#1a1a35", border:`1px solid ${activeMenu===item.label?"#7c4dff":"#7c4dff33"}`, color:"#fff", borderRadius:9, padding:"11px 12px", fontWeight:700, fontSize:13, cursor:"pointer", display:"flex", alignItems:"center", gap:8, transition:"all 0.2s", animation:`fadeUp 0.4s ease ${0.2+i*0.08}s both`, boxShadow:activeMenu===item.label?"0 0 18px #7c4dff55":"none" }}>
               <span style={{ fontSize:16 }}>{item.icon}</span>{item.label}
             </button>
           ))}
 
-          <button className="menu-btn" onClick={e=>{setActiveMenu("Inplay");addRipple(e);}}
+          <button className="menu-btn" onClick={e=>{setActiveMenu("Inplay"); addRipple(e); openWhatsApp("Hello, I want to bet on Inplay matches on MangoPlay!");}}
             style={{ gridColumn:"1 / -1", background:activeMenu==="Inplay"?"linear-gradient(90deg,#7c4dff,#b44dff)":"#1a1a35", border:`1px solid ${activeMenu==="Inplay"?"#7c4dff":"#7c4dff33"}`, color:"#fff", borderRadius:9, padding:"11px 14px", fontWeight:700, fontSize:13, cursor:"pointer", display:"flex", alignItems:"center", gap:10, transition:"all 0.2s", boxShadow:activeMenu==="Inplay"?"0 0 18px #7c4dff55":"none" }}>
             <span style={{ animation:"blink 1s infinite", fontSize:16 }}>📡</span>
             <span style={{ animation:"glow 2s infinite", color:"#f90", fontFamily:"'Oswald',sans-serif", letterSpacing:2 }}>((·)) INPLAY</span>
@@ -706,7 +706,7 @@ export default function App() {
               <div style={{ fontSize:11, color:"#000", opacity:0.75 }}>MI vs CSK  •  23 Mar 19:30</div>
             </div>
           </div>
-          <span style={{ background:"#000", color:"#ff9933", padding:"4px 12px", borderRadius:16, fontSize:11, fontWeight:700, animation:"pulse 2s infinite", flexShrink:0 }}>LIVE SOON</span>
+          <span onClick={()=>openWhatsApp("Hello, I want to bet on IPL 2026 on MangoPlay!")} style={{ background:"#000", color:"#ff9933", padding:"4px 12px", borderRadius:16, fontSize:11, fontWeight:700, animation:"pulse 2s infinite", flexShrink:0, cursor:"pointer" }}>LIVE SOON</span>
         </div>
 
         {/* ═══ IPL MATCHES HEADER ═══ */}
@@ -719,14 +719,14 @@ export default function App() {
           <div style={{ display:"flex", alignItems:"center", gap:8 }}>
             <span style={{ fontSize:12, background:"#7c4dff33", padding:"4px 10px", borderRadius:12, color:"#aaa", fontWeight:600 }}>10 Matches</span>
             <span style={{ fontSize:11, color:"#7c4dff", cursor:"pointer", fontWeight:700, transition:"color 0.2s" }}
-              onMouseEnter={e=>e.target.style.color="#f90"} onMouseLeave={e=>e.target.style.color="#7c4dff"}>VIEW ALL →</span>
+              onClick={()=>openWhatsApp("Hello, I want to see all IPL 2026 matches on MangoPlay!")} onMouseEnter={e=>e.target.style.color="#f90"} onMouseLeave={e=>e.target.style.color="#7c4dff"}>VIEW ALL →</span>
           </div>
         </div>
 
         {/* ═══ IPL MATCH CARDS ═══ */}
         <div style={{ padding:"4px 10px 80px" }}>
           {LIVE_MATCHES.map((match, i) => (
-            <div key={i} className="match-card"
+            <div key={i} className="match-card" onClick={()=>openWhatsApp(`Hello, I want to bet on ${match.t1} vs ${match.t2} on MangoPlay!`)}
               style={{ background:"#16162e", borderRadius:12, marginBottom:10, overflow:"hidden", border:"1px solid #7c4dff22", transition:"all 0.25s", cursor:"pointer", animation:cardsVis?`cardEntrance 0.5s ease ${i*0.08}s both`:"none", opacity:cardsVis?1:0 }}>
               {/* Card Header */}
               <div style={{ background:"linear-gradient(90deg,#1e1e40,#1a1a38)", padding:"6px 12px", display:"flex", alignItems:"center", justifyContent:"space-between" }}>
