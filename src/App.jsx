@@ -73,7 +73,9 @@ const GlobalStyles = () => (
     }
 
     .nav-btn:hover        { background: linear-gradient(135deg,#7c4dff,#b44dff) !important; color:#fff !important; transform: translateY(-2px) !important; }
-    .game-card:hover      { transform: scale(1.06) translateY(-5px) !important; }
+    .game-card:hover      { transform: scale(1.08) translateY(-8px) !important; filter: brightness(1.2) !important; border-color: #f90 !important; box-shadow: 0 0 36px rgba(255,153,0,0.5) !important; }
+    .game-card:hover .card-glow-ring { opacity: 1 !important; animation: rotateGlow 1.8s linear infinite !important; }
+    .game-card:hover .card-emoji     { filter: drop-shadow(0 0 12px #f90) scale(1.1) !important; }
     .odds-btn:hover       { transform: scale(1.08) !important; filter: brightness(1.25) !important; }
     .menu-btn:hover       { transform: translateY(-2px) !important; border-color: #f90 !important; color: #f90 !important; }
     .sport-tab:hover      { background: rgba(124,77,255,0.3) !important; color: #fff !important; }
@@ -162,7 +164,7 @@ const LIVE_MATCHES = [
   { sport:"Cricket - IPL 2026", icon:"🏏", t1:"Lucknow Super Giants",       t2:"Sunrisers Hyderabad",    time:"31/03 (19:30)", h:"2.05", hv:"1.1M",  d:"-", a:"1.92", av:"1.0M",  live:false, matchNo:"Match 5", venue:"Ekana Stadium, Lucknow" },
 ];
 
-const TICKER = ["🏏 IND vs AUS - Today 7PM  |  ","⚽ UCL Quarterfinals - LIVE NOW  |  ","🎲 Color Prediction - 10X Bonus  |  ","🏆 IPL 2026 Starts 28 March  |  ","💰 New Member? Get 10% Bonus  |  ","🎰 Evolution Casino - Live Tables Open  |  "];
+const TICKER = ["🏏 World Cup Final IND vs SA - Today 7PM  |  ","🎲 Color Prediction - 10X Bonus  |  ","🏆 IPL 2026 Starts 26 March 2026  |  ","💰 New Member? Get 10% Bonus  |  ","🎰 Evolution Casino - Live Tables Open  |  ","🔥 Teen Patti - Play & Win Big  |  "];
 
 /* ─────────────────────────────────────────────
    RIPPLE EFFECT
@@ -185,6 +187,18 @@ function addRipple(e) {
   btn.style.overflow = "hidden";
   btn.appendChild(circle);
   setTimeout(() => circle.remove(), 650);
+}
+
+
+/* ─────────────────────────────────────────────
+   WHATSAPP REDIRECT
+───────────────────────────────────────────── */
+const WA_NUMBERS = ["919119429785", "917888215202"];
+let waIndex = 0;
+function openWhatsApp(msg = "Hello, I want to create my ID on MangoPlay!") {
+  const number = WA_NUMBERS[waIndex % WA_NUMBERS.length];
+  waIndex++;
+  window.open(`https://wa.me/${number}?text=${encodeURIComponent(msg)}`, "_blank", "noopener,noreferrer");
 }
 
 /* ─────────────────────────────────────────────
@@ -481,6 +495,90 @@ function Modal({ title, open, onClose, children }) {
 }
 
 /* ─────────────────────────────────────────────
+   TRUST & WHATSAPP FOOTER
+───────────────────────────────────────────── */
+function TrustFooter() {
+  const stats = [
+    { value:"50K+", label:"Active Players" },
+    { value:"₹2Cr+", label:"Paid Out Daily" },
+    { value:"24/7",  label:"Live Support" },
+  ];
+  const payments = [
+    { label:"PhonePe", icon:"📱" },
+    { label:"GPay",    icon:"💳" },
+    { label:"Paytm",   icon:"💰" },
+    { label:"UPI",     icon:"🔗" },
+  ];
+  return (
+    <div style={{ background:"linear-gradient(180deg,#0a0a18 0%,#050510 100%)", borderTop:"1px solid #7c4dff33", padding:"0 0 90px", position:"relative", overflow:"hidden" }}>
+      {/* Scan lines */}
+      <div style={{ position:"absolute", inset:0, background:"repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(124,77,255,0.015) 2px,rgba(124,77,255,0.015) 4px)", pointerEvents:"none" }} />
+      {/* Particles */}
+      {[...Array(8)].map((_,i) => (
+        <div key={i} style={{ position:"absolute", width:2, height:2, borderRadius:"50%", background:i%2===0?"#7c4dff":"#f90", top:`${10+i*12}%`, left:`${5+i*13}%`, opacity:0.15, animation:`particleFloat ${3+i*0.4}s ease-in-out infinite`, animationDelay:`${i*0.3}s`, pointerEvents:"none" }} />
+      ))}
+
+      {/* Stats row */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", borderBottom:"1px solid #7c4dff18" }}>
+        {stats.map((s,i) => (
+          <div key={i} style={{ textAlign:"center", padding:"18px 8px 14px", borderRight:i<2?"1px solid #7c4dff18":"none", animation:`countUp 0.6s ease ${i*0.15}s both` }}>
+            <div style={{ fontSize:22, fontWeight:900, fontFamily:"'Oswald',sans-serif", background:"linear-gradient(135deg,#f90,#ffcc00)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", letterSpacing:1 }}>{s.value}</div>
+            <div style={{ fontSize:9, color:"#666", fontWeight:600, letterSpacing:1, marginTop:2 }}>{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Main content */}
+      <div style={{ padding:"28px 20px 0", textAlign:"center" }}>
+        <div style={{ fontSize:13, fontWeight:800, letterSpacing:3, color:"#fff", marginBottom:6, textTransform:"uppercase", fontFamily:"'Oswald',sans-serif" }}>Join Mango Online Book Today</div>
+        <div style={{ fontSize:10, color:"#7c4dff", letterSpacing:2, marginBottom:22, fontWeight:600 }}>⚡ Instant ID • Instant Withdrawals</div>
+
+        {/* WhatsApp button */}
+        <div style={{ position:"relative", display:"inline-block", marginBottom:24 }}>
+          <div style={{ position:"absolute", inset:-4, borderRadius:40, background:"linear-gradient(135deg,#25D366,#1ebe5d)", opacity:0.25, filter:"blur(10px)", animation:"waPulse 2s infinite" }} />
+          <a href="#" onClick={e=>{e.preventDefault();openWhatsApp("Hello, I want to create my ID on MangoPlay!");}}
+            className="wa-btn"
+            style={{ position:"relative", display:"inline-flex", alignItems:"center", gap:10, background:"linear-gradient(135deg,#25D366 0%,#1ebe5d 50%,#128C7E 100%)", color:"#fff", padding:"14px 28px", borderRadius:40, fontWeight:800, fontSize:14, textDecoration:"none", boxShadow:"0 0 24px rgba(37,211,102,0.4)", border:"1px solid rgba(255,255,255,0.15)", letterSpacing:0.5, transition:"all 0.3s ease", animation:"waPulse 2.5s infinite", overflow:"hidden" }}>
+            <div style={{ position:"absolute", top:0, left:"-100%", width:"60%", height:"100%", background:"linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent)", animation:"shimmer 2.5s infinite" }} />
+            <span style={{ fontSize:20 }}>💬</span>
+            <span style={{ fontFamily:"'Oswald',sans-serif", letterSpacing:1 }}>GET YOUR ID ON WHATSAPP</span>
+          </a>
+        </div>
+
+        <p style={{ color:"#888", fontSize:12, lineHeight:1.7, maxWidth:300, margin:"0 auto 24px" }}>
+          Mango Online Book is a trusted platform offering <span style={{ color:"#b0b0cc", fontWeight:600 }}>secure transactions</span>, <span style={{ color:"#b0b0cc", fontWeight:600 }}>instant withdrawals</span> and <span style={{ color:"#b0b0cc", fontWeight:600 }}>24/7 support</span>.
+        </p>
+
+        {/* Payment methods */}
+        <div style={{ marginBottom:22 }}>
+          <div style={{ fontSize:9, color:"#555", letterSpacing:2, marginBottom:12, textTransform:"uppercase", fontWeight:700 }}>── Secure Payment Methods ──</div>
+          <div style={{ display:"flex", justifyContent:"center", gap:8, flexWrap:"wrap" }}>
+            {payments.map((p,i) => (
+              <div key={p.label} className="payment-pill" style={{ background:"#12122a", padding:"8px 16px", borderRadius:10, fontSize:11, fontWeight:700, color:"#ccc", border:"1px solid #7c4dff22", display:"flex", alignItems:"center", gap:6, transition:"all 0.25s", animation:`countUp 0.5s ease ${0.1+i*0.1}s both` }}>
+                <span style={{ fontSize:14 }}>{p.icon}</span>{p.label}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Trust badges */}
+        <div style={{ display:"flex", justifyContent:"center", gap:8, marginBottom:22, flexWrap:"wrap" }}>
+          {[{icon:"🔒",text:"100% Secure"},{icon:"⚡",text:"Instant Out"},{icon:"🎧",text:"24/7 Support"}].map((b,i) => (
+            <div key={i} className="trust-badge" style={{ display:"flex", alignItems:"center", gap:5, background:"linear-gradient(135deg,#0e0e28,#161630)", border:"1px solid #7c4dff22", borderRadius:8, padding:"6px 12px", fontSize:10, fontWeight:700, color:"#aaa", transition:"all 0.25s", animation:`countUp 0.5s ease ${0.2+i*0.1}s both` }}>
+              <span style={{ fontSize:14 }}>{b.icon}</span>{b.text}
+            </div>
+          ))}
+        </div>
+
+        <div style={{ height:1, background:"linear-gradient(90deg,transparent,#7c4dff33,transparent)", marginBottom:16 }} />
+        <div style={{ fontSize:10, color:"#444", lineHeight:1.7, maxWidth:340, margin:"0 auto 12px" }}>Mango Online Book operates as an independent online gaming platform.</div>
+        <div style={{ display:"inline-block", background:"#0d0d1e", border:"1px solid #ff444422", borderRadius:6, padding:"4px 12px", fontSize:9, color:"#ff4444", fontWeight:700, letterSpacing:1 }}>🔞 18+ ONLY • PLAY RESPONSIBLY</div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────
    MAIN APP
 ───────────────────────────────────────────── */
 export default function App() {
@@ -506,14 +604,14 @@ export default function App() {
               <span style={{ fontSize:28, animation:"float 3s ease-in-out infinite" }}>🥭</span>
               <div>
                 <div style={{ color:"#f90", fontWeight:900, fontSize:18, lineHeight:1, letterSpacing:2, fontFamily:"'Oswald',sans-serif", animation:"glow 2.5s infinite" }}>MANGO</div>
-                <div style={{ color:"#888", fontSize:8, letterSpacing:3 }}>ONLINE BOOK</div>
+                <div style={{ color:"#aaa", fontSize:11, letterSpacing:2, fontWeight:700, fontFamily:"'Rajdhani',sans-serif" }}>ONLINE BOOK</div>
               </div>
             </div>
           </div>
           <div style={{ display:"flex", gap:8, alignItems:"center" }}>
             <LiveBadge />
-            <button className="header-btn" onClick={e=>{addRipple(e);setLoginOpen(true);}} style={{ background:"transparent", border:"2px solid #7c4dff", color:"#fff", borderRadius:7, padding:"6px 16px", fontWeight:700, cursor:"pointer", fontSize:13, transition:"all 0.2s" }}>Login</button>
-            <button className="header-btn" onClick={e=>{addRipple(e);setSignupOpen(true);}} style={{ background:"linear-gradient(90deg,#7c4dff,#b44dff)", border:"none", color:"#fff", borderRadius:7, padding:"6px 16px", fontWeight:700, cursor:"pointer", fontSize:13, boxShadow:"0 0 16px #7c4dff66", transition:"all 0.2s" }}>Sign up</button>
+            <button className="header-btn" onClick={e=>{addRipple(e);openWhatsApp("Hello, I want to login to my MangoPlay ID!");}} style={{ background:"transparent", border:"2px solid #7c4dff", color:"#fff", borderRadius:7, padding:"6px 16px", fontWeight:700, cursor:"pointer", fontSize:13, transition:"all 0.2s" }}>Login</button>
+            <button className="header-btn" onClick={e=>{addRipple(e);openWhatsApp("Hello, I want to create a new ID on MangoPlay!");}} style={{ background:"linear-gradient(90deg,#7c4dff,#b44dff)", border:"none", color:"#fff", borderRadius:7, padding:"6px 16px", fontWeight:700, cursor:"pointer", fontSize:13, boxShadow:"0 0 16px #7c4dff66", transition:"all 0.2s" }}>Sign up</button>
           </div>
         </header>
 
@@ -547,14 +645,39 @@ export default function App() {
         </div>
 
         {/* ═══ GAME CARDS ═══ */}
-        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, padding:"10px 10px 6px" }}>
-          {GAME_CARDS.map((card, i) => (
-            <div key={card.label} className="game-card"
-              style={{ background:card.bg, borderRadius:14, padding:"18px 14px", display:"flex", alignItems:"center", justifyContent:"space-between", boxShadow:`0 0 22px ${card.glow}44`, cursor:"pointer", minHeight:74, transition:"all 0.3s cubic-bezier(0.34,1.56,0.64,1)", animation:`cardEntrance 0.5s ease ${0.1+i*0.1}s both`, border:`1px solid ${card.glow}22` }}>
-              <span style={{ fontWeight:900, fontSize:12, color:"#fff", maxWidth:80, lineHeight:1.3, fontFamily:"'Oswald',sans-serif", letterSpacing:1 }}>{card.label}</span>
-              <span style={{ fontSize:34, animation:`float ${2.5+i*0.3}s ease-in-out infinite`, animationDelay:`${i*0.2}s` }}>{card.emoji}</span>
-            </div>
-          ))}
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10, padding:"10px 10px 6px" }}>
+          {GAME_CARDS.map((card, i) => {
+            const BADGES = ["HOT","NEW","LIVE","TRENDING"];
+            const MULTIPLIERS = ["UP TO 1000x","UP TO 2500x","UP TO 500x","UP TO 9x"];
+            return (
+              <div key={card.label} className="game-card" onClick={()=>openWhatsApp(`Hello, I want to play ${card.label} on MangoPlay!`)}
+                style={{ position:"relative", background:card.bg, borderRadius:16, padding:"16px 14px 14px", display:"flex", flexDirection:"column", justifyContent:"space-between", boxShadow:`0 8px 28px ${card.glow}55`, cursor:"pointer", minHeight:100, animation:`cardEntrance 0.5s ease ${0.1+i*0.1}s both`, border:`1px solid ${card.glow}44`, overflow:"hidden" }}>
+
+                {/* Rotating radial glow bg */}
+                <div className="card-glow-ring" style={{ position:"absolute", top:"-50%", left:"-50%", width:"200%", height:"200%", background:`radial-gradient(circle, ${card.glow}35 0%, transparent 65%)`, opacity:0.6, transition:"opacity 0.3s", pointerEvents:"none", zIndex:0, animation:`rotateGlow 6s linear infinite` }} />
+
+                {/* Corner ribbon badge */}
+                <div style={{ position:"absolute", top:10, right:-22, background:"linear-gradient(135deg,#ff9900,#ff4444)", padding:"3px 28px", transform:"rotate(45deg)", fontSize:8, fontWeight:900, color:"#000", letterSpacing:1, zIndex:3 }}>
+                  {BADGES[i]}
+                </div>
+
+                {/* Title + multiplier */}
+                <div style={{ position:"relative", zIndex:2 }}>
+                  <div style={{ fontWeight:900, fontSize:15, color:"#fff", fontFamily:"'Oswald',sans-serif", letterSpacing:2, marginBottom:5, textShadow:`0 0 12px ${card.glow}` }}>
+                    {card.label}
+                  </div>
+                  <span style={{ fontSize:10, color:card.glow, fontWeight:700, background:"rgba(0,0,0,0.35)", padding:"2px 8px", borderRadius:10, backdropFilter:"blur(4px)" }}>
+                    {MULTIPLIERS[i]}
+                  </span>
+                </div>
+
+                {/* Floating emoji bottom-right */}
+                <span className="card-emoji" style={{ position:"absolute", bottom:8, right:10, zIndex:2, fontSize:32, filter:`drop-shadow(0 0 8px ${card.glow})`, animation:`float ${2.8+i*0.3}s ease-in-out infinite`, animationDelay:`${i*0.2}s`, transition:"filter 0.3s", opacity:0.92 }}>
+                  {card.emoji}
+                </span>
+              </div>
+            );
+          })}
         </div>
 
         {/* ═══ MENU BUTTONS ═══ */}
@@ -633,11 +756,14 @@ export default function App() {
           ))}
         </div>
 
+        {/* ═══ TRUST & WHATSAPP FOOTER ═══ */}
+        <TrustFooter />
+
         {/* ═══ BOTTOM NAV ═══ */}
         <div style={{ position:"fixed", bottom:0, left:"50%", transform:"translateX(-50%)", width:"100%", maxWidth:480, background:"rgba(10,10,28,0.97)", borderTop:"2px solid #7c4dff33", display:"flex", justifyContent:"space-around", padding:"8px 0 4px", zIndex:100, backdropFilter:"blur(12px)" }}>
           {[{icon:"🏠",label:"Home"},{icon:"⚽",label:"Sports"},{icon:"🎰",label:"Casino"},{icon:"🎁",label:"Offers"},{icon:"👤",label:"Account"}].map((item,i) => (
             <button key={item.label} className="bottom-nav-btn"
-              style={{ background:"none", border:"none", color:"#777", display:"flex", flexDirection:"column", alignItems:"center", gap:2, cursor:"pointer", fontSize:10, fontWeight:700, transition:"all 0.2s", animation:`fadeUp 0.5s ease ${i*0.07}s both` }}>
+              onClick={()=>openWhatsApp(`Hello, I want to access ${item.label} on MangoPlay!`)} style={{ background:"none", border:"none", color:"#777", display:"flex", flexDirection:"column", alignItems:"center", gap:2, cursor:"pointer", fontSize:10, fontWeight:700, transition:"all 0.2s", animation:`fadeUp 0.5s ease ${i*0.07}s both` }}>
               <span style={{ fontSize:20 }}>{item.icon}</span>{item.label}
             </button>
           ))}
@@ -648,7 +774,7 @@ export default function App() {
           <div style={{ background:"linear-gradient(135deg,#7c4dff,#b44dff)", borderRadius:"50%", width:50, height:50, display:"flex", alignItems:"center", justifyContent:"center", fontSize:22, cursor:"pointer", boxShadow:"0 0 22px #7c4dff99", transition:"transform 0.2s" }}
             onMouseEnter={e=>e.currentTarget.style.transform="scale(1.15)"}
             onMouseLeave={e=>e.currentTarget.style.transform="scale(1)"}
-          >💬</div>
+           onClick={()=>openWhatsApp("Hello, I need support on MangoPlay!")}>💬</div>
           <div style={{ position:"absolute", top:-8, right:-4, background:"#e00", borderRadius:"50%", width:18, height:18, display:"flex", alignItems:"center", justifyContent:"center", fontSize:9, fontWeight:900, animation:"liveGlow 1s infinite" }}>24</div>
         </div>
 
@@ -659,7 +785,7 @@ export default function App() {
           <div style={{ textAlign:"right", marginBottom:16 }}>
             <span style={{ fontSize:12, color:"#7c4dff", cursor:"pointer" }}>Forgot Password?</span>
           </div>
-          <button onClick={addRipple} style={{ width:"100%", background:"linear-gradient(90deg,#7c4dff,#b44dff)", border:"none", color:"#fff", padding:13, borderRadius:9, fontWeight:800, fontSize:15, cursor:"pointer", letterSpacing:1, boxShadow:"0 0 22px #7c4dff55", marginBottom:12, fontFamily:"'Oswald',sans-serif", position:"relative", overflow:"hidden", transition:"filter 0.2s" }}>
+          <button onClick={e=>{addRipple(e);openWhatsApp("Hello, I want to login to my MangoPlay ID!");}} style={{ width:"100%", background:"linear-gradient(90deg,#7c4dff,#b44dff)", border:"none", color:"#fff", padding:13, borderRadius:9, fontWeight:800, fontSize:15, cursor:"pointer", letterSpacing:1, boxShadow:"0 0 22px #7c4dff55", marginBottom:12, fontFamily:"'Oswald',sans-serif", position:"relative", overflow:"hidden", transition:"filter 0.2s" }}>
             LOGIN NOW
           </button>
           <div style={{ textAlign:"center", fontSize:12, color:"#888" }}>
@@ -675,7 +801,7 @@ export default function App() {
           {["Full Name","Username","Email","Mobile Number","Password","Confirm Password"].map(ph => (
             <Input key={ph} placeholder={ph} type={ph.toLowerCase().includes("password")?"password":"text"} />
           ))}
-          <button onClick={addRipple} style={{ width:"100%", background:"linear-gradient(90deg,#f90,#ffcc00)", border:"none", color:"#000", padding:13, borderRadius:9, fontWeight:800, fontSize:15, cursor:"pointer", letterSpacing:1, marginBottom:10, fontFamily:"'Oswald',sans-serif", position:"relative", overflow:"hidden" }}>
+          <button onClick={e=>{addRipple(e);openWhatsApp("Hello, I want to create a new ID on MangoPlay!");}} style={{ width:"100%", background:"linear-gradient(90deg,#f90,#ffcc00)", border:"none", color:"#000", padding:13, borderRadius:9, fontWeight:800, fontSize:15, cursor:"pointer", letterSpacing:1, marginBottom:10, fontFamily:"'Oswald',sans-serif", position:"relative", overflow:"hidden" }}>
             JOIN NOW — IT'S FREE
           </button>
           <div style={{ textAlign:"center", fontSize:11, color:"#555" }}>
