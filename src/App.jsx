@@ -71,6 +71,10 @@ const GlobalStyles = () => (
       0%,100% { transform: translateY(0) rotate(0deg);   opacity: 0.15; }
       50%      { transform: translateY(-20px) rotate(180deg); opacity: 0.3; }
     }
+    @keyframes shimmer {
+      0%   { left: -100%; }
+      100% { left: 200%; }
+    }
 
     .nav-btn:hover        { background: linear-gradient(135deg,#7c4dff,#b44dff) !important; color:#fff !important; transform: translateY(-2px) !important; }
     .game-card:hover      { transform: scale(1.08) translateY(-8px) !important; filter: brightness(1.2) !important; border-color: #f90 !important; box-shadow: 0 0 36px rgba(255,153,0,0.5) !important; }
@@ -631,13 +635,13 @@ function Modal({ title, open, onClose, children }) {
 }
 
 /* ─────────────────────────────────────────────
-   TRUST & WHATSAPP FOOTER
+   TRUST & WHATSAPP FOOTER — REDESIGNED
 ───────────────────────────────────────────── */
 function TrustFooter() {
   const stats = [
-    { value:"50K+", label:"Active Players" },
-    { value:"₹2Cr+", label:"Paid Out Daily" },
-    { value:"24/7",  label:"Live Support" },
+    { value:"50K+", label:"Active Players", icon:"👥" },
+    { value:"₹2Cr+", label:"Paid Out Daily", icon:"💰" },
+    { value:"24/7",  label:"Live Support",   icon:"🎧" },
   ];
   const payments = [
     { label:"PhonePe", icon:"📱" },
@@ -645,54 +649,151 @@ function TrustFooter() {
     { label:"Paytm",   icon:"💰" },
     { label:"UPI",     icon:"🔗" },
   ];
+  const features = [
+    { icon:"⚡", title:"Instant ID", desc:"Get your ID in under 2 mins" },
+    { icon:"💸", title:"Fast Withdrawal", desc:"Money in your account same day" },
+    { icon:"🔒", title:"100% Secure", desc:"Encrypted & safe transactions" },
+    { icon:"🎧", title:"24/7 Support", desc:"Always here to help you" },
+  ];
+
   return (
-    <div style={{ background:"linear-gradient(180deg,#0a0a18 0%,#050510 100%)", borderTop:"1px solid #7c4dff33", padding:"0 0 90px", position:"relative", overflow:"hidden" }}>
-      <div style={{ position:"absolute", inset:0, background:"repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(124,77,255,0.015) 2px,rgba(124,77,255,0.015) 4px)", pointerEvents:"none" }} />
-      {[...Array(8)].map((_,i) => (
-        <div key={i} style={{ position:"absolute", width:2, height:2, borderRadius:"50%", background:i%2===0?"#7c4dff":"#f90", top:`${10+i*12}%`, left:`${5+i*13}%`, opacity:0.15, animation:`particleFloat ${3+i*0.4}s ease-in-out infinite`, animationDelay:`${i*0.3}s`, pointerEvents:"none" }} />
-      ))}
-      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", borderBottom:"1px solid #7c4dff18" }}>
+    <div style={{ position:"relative", overflow:"hidden", paddingBottom:90 }}>
+
+      {/* ── Glowing divider line ── */}
+      <div style={{ height:2, background:"linear-gradient(90deg,transparent,#7c4dff,#f90,#7c4dff,transparent)" }} />
+
+      {/* ── Stats bar ── */}
+      <div style={{
+        background:"linear-gradient(135deg,#0f0f28 0%,#1a0a35 50%,#0f0f28 100%)",
+        display:"grid", gridTemplateColumns:"1fr 1fr 1fr",
+        borderBottom:"1px solid #7c4dff22",
+      }}>
         {stats.map((s,i) => (
-          <div key={i} style={{ textAlign:"center", padding:"18px 8px 14px", borderRight:i<2?"1px solid #7c4dff18":"none" }}>
+          <div key={i} style={{
+            textAlign:"center", padding:"16px 8px 12px",
+            borderRight:i<2?"1px solid #7c4dff18":"none",
+            position:"relative", overflow:"hidden",
+          }}>
+            <div style={{ position:"absolute", top:0, left:0, right:0, bottom:0, background:`radial-gradient(circle at 50% 0%, #7c4dff12, transparent 70%)`, pointerEvents:"none" }} />
+            <div style={{ fontSize:18, marginBottom:2 }}>{s.icon}</div>
             <div style={{ fontSize:22, fontWeight:900, fontFamily:"'Oswald',sans-serif", background:"linear-gradient(135deg,#f90,#ffcc00)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", letterSpacing:1 }}>{s.value}</div>
-            <div style={{ fontSize:9, color:"#666", fontWeight:600, letterSpacing:1, marginTop:2 }}>{s.label}</div>
+            <div style={{ fontSize:9, color:"#666", fontWeight:600, letterSpacing:1, marginTop:1 }}>{s.label}</div>
           </div>
         ))}
       </div>
-      <div style={{ padding:"28px 20px 0", textAlign:"center" }}>
-        <div style={{ fontSize:13, fontWeight:800, letterSpacing:3, color:"#fff", marginBottom:6, textTransform:"uppercase", fontFamily:"'Oswald',sans-serif" }}>Join Mango Online Book Today</div>
-        <div style={{ fontSize:10, color:"#7c4dff", letterSpacing:2, marginBottom:22, fontWeight:600 }}>⚡ Instant ID • Instant Withdrawals</div>
-        <div style={{ position:"relative", display:"inline-block", marginBottom:24 }}>
-          <div style={{ position:"absolute", inset:-4, borderRadius:40, background:"linear-gradient(135deg,#25D366,#1ebe5d)", opacity:0.25, filter:"blur(10px)" }} />
-          <a href="#" onClick={e=>{e.preventDefault();openWhatsApp("Hello, I want to create my ID on MangoPlay!");}}
-            style={{ position:"relative", display:"inline-flex", alignItems:"center", gap:10, background:"linear-gradient(135deg,#25D366 0%,#1ebe5d 50%,#128C7E 100%)", color:"#fff", padding:"14px 28px", borderRadius:40, fontWeight:800, fontSize:14, textDecoration:"none", boxShadow:"0 0 24px rgba(37,211,102,0.4)", border:"1px solid rgba(255,255,255,0.15)", letterSpacing:0.5, transition:"all 0.3s ease", overflow:"hidden" }}>
-            <span style={{ fontSize:20 }}>💬</span>
-            <span style={{ fontFamily:"'Oswald',sans-serif", letterSpacing:1 }}>GET YOUR ID ON WHATSAPP</span>
-          </a>
-        </div>
-        <p style={{ color:"#888", fontSize:12, lineHeight:1.7, maxWidth:300, margin:"0 auto 24px" }}>
-          Mango Online Book is a trusted platform offering <span style={{ color:"#b0b0cc", fontWeight:600 }}>secure transactions</span>, <span style={{ color:"#b0b0cc", fontWeight:600 }}>instant withdrawals</span> and <span style={{ color:"#b0b0cc", fontWeight:600 }}>24/7 support</span>.
-        </p>
-        <div style={{ marginBottom:22 }}>
-          <div style={{ fontSize:9, color:"#555", letterSpacing:2, marginBottom:12, textTransform:"uppercase", fontWeight:700 }}>── Secure Payment Methods ──</div>
-          <div style={{ display:"flex", justifyContent:"center", gap:8, flexWrap:"wrap" }}>
-            {payments.map((p,i) => (
-              <div key={p.label} style={{ background:"#12122a", padding:"8px 16px", borderRadius:10, fontSize:11, fontWeight:700, color:"#ccc", border:"1px solid #7c4dff22", display:"flex", alignItems:"center", gap:6 }}>
-                <span style={{ fontSize:14 }}>{p.icon}</span>{p.label}
+
+      {/* ── Main CTA section ── */}
+      <div style={{
+        background:"linear-gradient(160deg,#0d0d22 0%,#150a30 40%,#0a1220 100%)",
+        padding:"28px 18px 24px",
+        textAlign:"center",
+        position:"relative",
+        overflow:"hidden",
+      }}>
+        {/* Background glow blobs */}
+        <div style={{ position:"absolute", top:-40, left:-40, width:180, height:180, borderRadius:"50%", background:"radial-gradient(circle,#7c4dff22,transparent 70%)", pointerEvents:"none" }} />
+        <div style={{ position:"absolute", bottom:-40, right:-40, width:180, height:180, borderRadius:"50%", background:"radial-gradient(circle,#f9900022,transparent 70%)", pointerEvents:"none" }} />
+        {/* Floating particles */}
+        {[...Array(10)].map((_,i) => (
+          <div key={i} style={{ position:"absolute", width:i%3===0?3:2, height:i%3===0?3:2, borderRadius:"50%", background:i%2===0?"#7c4dff":"#f90", top:`${5+i*9}%`, left:`${3+i*10}%`, opacity:0.15, animation:`particleFloat ${2.5+i*0.4}s ease-in-out infinite`, animationDelay:`${i*0.2}s`, pointerEvents:"none" }} />
+        ))}
+
+        {/* Heading */}
+        <div style={{ position:"relative", zIndex:2 }}>
+          <div style={{ display:"inline-block", background:"linear-gradient(90deg,#7c4dff22,#f9900022)", border:"1px solid #7c4dff44", borderRadius:20, padding:"4px 16px", fontSize:10, fontWeight:700, color:"#7c4dff", letterSpacing:2, marginBottom:12 }}>
+            🥭 INDIA'S TRUSTED ONLINE BOOK
+          </div>
+          <div style={{ fontSize:26, fontWeight:900, fontFamily:"'Oswald',sans-serif", letterSpacing:2, lineHeight:1.1, marginBottom:6 }}>
+            <span style={{ background:"linear-gradient(135deg,#fff,#ccc)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>JOIN </span>
+            <span style={{ background:"linear-gradient(135deg,#f90,#ffcc00)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", animation:"glow 2.5s infinite" }}>MANGO </span>
+            <span style={{ background:"linear-gradient(135deg,#fff,#ccc)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>TODAY</span>
+          </div>
+          <div style={{ fontSize:11, color:"#888", marginBottom:22, letterSpacing:0.5 }}>
+            Over <span style={{ color:"#f90", fontWeight:700 }}>50,000 players</span> trust us every day
+          </div>
+
+          {/* WhatsApp CTA button */}
+          <div style={{ position:"relative", display:"inline-block", marginBottom:20 }}>
+            <div style={{ position:"absolute", inset:-6, borderRadius:50, background:"linear-gradient(135deg,#25D366,#128C7E)", opacity:0.3, filter:"blur(14px)", animation:"pulse 2s infinite" }} />
+            <a href="#" onClick={e=>{e.preventDefault();openWhatsApp("Hello, I want to create my ID on MangoPlay!");}}
+              style={{
+                position:"relative", display:"inline-flex", alignItems:"center", gap:10,
+                background:"linear-gradient(135deg,#25D366 0%,#1ebe5d 50%,#128C7E 100%)",
+                color:"#fff", padding:"14px 32px", borderRadius:50,
+                fontWeight:900, fontSize:15, textDecoration:"none",
+                boxShadow:"0 6px 30px rgba(37,211,102,0.5)",
+                border:"1px solid rgba(255,255,255,0.2)",
+                fontFamily:"'Oswald',sans-serif", letterSpacing:1,
+                overflow:"hidden",
+              }}>
+              <div style={{ position:"absolute", top:0, left:"-100%", width:"60%", height:"100%", background:"linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent)", animation:"shimmer 2.5s infinite" }} />
+              <span style={{ fontSize:22 }}>💬</span>
+              GET YOUR ID ON WHATSAPP
+            </a>
+          </div>
+
+          {/* Feature grid */}
+          <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:20 }}>
+            {features.map((f,i) => (
+              <div key={i} style={{
+                background:"linear-gradient(135deg,#12122a,#1a1535)",
+                border:"1px solid #7c4dff22",
+                borderRadius:12,
+                padding:"12px 10px",
+                textAlign:"left",
+                display:"flex", alignItems:"center", gap:10,
+                transition:"all 0.25s",
+              }}
+                onMouseEnter={e=>{e.currentTarget.style.borderColor="#7c4dff88"; e.currentTarget.style.transform="translateY(-2px)";}}
+                onMouseLeave={e=>{e.currentTarget.style.borderColor="#7c4dff22"; e.currentTarget.style.transform="none";}}
+              >
+                <div style={{ fontSize:22, flexShrink:0, filter:"drop-shadow(0 0 6px #7c4dff66)" }}>{f.icon}</div>
+                <div>
+                  <div style={{ fontSize:11, fontWeight:800, color:"#fff", letterSpacing:0.5 }}>{f.title}</div>
+                  <div style={{ fontSize:9, color:"#666", marginTop:1 }}>{f.desc}</div>
+                </div>
               </div>
             ))}
           </div>
-        </div>
-        <div style={{ display:"flex", justifyContent:"center", gap:8, marginBottom:22, flexWrap:"wrap" }}>
-          {[{icon:"🔒",text:"100% Secure"},{icon:"⚡",text:"Instant Out"},{icon:"🎧",text:"24/7 Support"}].map((b,i) => (
-            <div key={i} style={{ display:"flex", alignItems:"center", gap:5, background:"linear-gradient(135deg,#0e0e28,#161630)", border:"1px solid #7c4dff22", borderRadius:8, padding:"6px 12px", fontSize:10, fontWeight:700, color:"#aaa" }}>
-              <span style={{ fontSize:14 }}>{b.icon}</span>{b.text}
+
+          {/* Payment methods */}
+          <div style={{ marginBottom:20 }}>
+            <div style={{ display:"flex", alignItems:"center", gap:8, justifyContent:"center", marginBottom:10 }}>
+              <div style={{ height:1, flex:1, background:"linear-gradient(90deg,transparent,#7c4dff33)" }} />
+              <span style={{ fontSize:9, color:"#555", fontWeight:700, letterSpacing:2 }}>SECURE PAYMENTS</span>
+              <div style={{ height:1, flex:1, background:"linear-gradient(90deg,#7c4dff33,transparent)" }} />
             </div>
-          ))}
+            <div style={{ display:"flex", justifyContent:"center", gap:8, flexWrap:"wrap" }}>
+              {payments.map((p) => (
+                <div key={p.label} style={{
+                  background:"linear-gradient(135deg,#12122a,#1c1540)",
+                  padding:"8px 14px", borderRadius:10,
+                  fontSize:11, fontWeight:700, color:"#bbb",
+                  border:"1px solid #7c4dff33",
+                  display:"flex", alignItems:"center", gap:6,
+                  boxShadow:"0 2px 10px rgba(0,0,0,0.3)",
+                }}>
+                  <span style={{ fontSize:16 }}>{p.icon}</span>{p.label}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Bottom divider + disclaimer */}
+          <div style={{ height:1, background:"linear-gradient(90deg,transparent,#7c4dff44,#f90044,#7c4dff44,transparent)", marginBottom:14 }} />
+          <div style={{ fontSize:9, color:"#333", marginBottom:10 }}>
+            Mango Online Book — Trusted by 50,000+ players across India
+          </div>
+          <div style={{
+            display:"inline-flex", alignItems:"center", gap:6,
+            background:"linear-gradient(135deg,#1a0a0a,#2a0a0a)",
+            border:"1px solid #ff444433",
+            borderRadius:8, padding:"5px 14px",
+            fontSize:9, color:"#ff6666", fontWeight:700, letterSpacing:1,
+          }}>
+            🔞 18+ ONLY &nbsp;•&nbsp; PLEASE PLAY RESPONSIBLY
+          </div>
         </div>
-        <div style={{ height:1, background:"linear-gradient(90deg,transparent,#7c4dff33,transparent)", marginBottom:16 }} />
-        <div style={{ fontSize:10, color:"#444", lineHeight:1.7, maxWidth:340, margin:"0 auto 12px" }}>Mango Online Book operates as an independent online gaming platform.</div>
-        <div style={{ display:"inline-block", background:"#0d0d1e", border:"1px solid #ff444422", borderRadius:6, padding:"4px 12px", fontSize:9, color:"#ff4444", fontWeight:700, letterSpacing:1 }}>🔞 18+ ONLY • PLAY RESPONSIBLY</div>
       </div>
     </div>
   );
@@ -831,7 +932,7 @@ export default function App() {
         </div>
 
         {/* ═══ IPL MATCH CARDS — NEW BullPlay247-style UI ═══ */}
-        <div style={{ padding:"4px 10px 80px" }}>
+        <div style={{ padding:"4px 10px 12px" }}>
           {LIVE_MATCHES.map((match, i) => (
             <MatchCard key={i} match={match} index={i} visible={cardsVis} />
           ))}
