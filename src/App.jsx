@@ -635,6 +635,189 @@ function Modal({ title, open, onClose, children }) {
 }
 
 /* ─────────────────────────────────────────────
+   HOW IT WORKS
+───────────────────────────────────────────── */
+function HowItWorks() {
+  const steps = [
+    { num:"01", icon:"💬", title:"Message Us", desc:"Click WhatsApp & send us a message to create your free ID instantly", color:"#25D366" },
+    { num:"02", icon:"💳", title:"Add Funds", desc:"Deposit via PhonePe, GPay, Paytm or UPI — minimum just ₹100", color:"#f90" },
+    { num:"03", icon:"🏆", title:"Start Winning", desc:"Place bets on IPL, Casino, Color Prediction & win real cash", color:"#7c4dff" },
+  ];
+  return (
+    <div style={{ background:"linear-gradient(160deg,#0d0d22,#120a28)", padding:"24px 14px 20px", position:"relative", overflow:"hidden" }}>
+      {/* glow blobs */}
+      <div style={{ position:"absolute", top:-30, left:-30, width:140, height:140, borderRadius:"50%", background:"radial-gradient(circle,#7c4dff18,transparent 70%)", pointerEvents:"none" }} />
+      <div style={{ position:"absolute", bottom:-30, right:-30, width:140, height:140, borderRadius:"50%", background:"radial-gradient(circle,#f9900018,transparent 70%)", pointerEvents:"none" }} />
+
+      {/* heading */}
+      <div style={{ textAlign:"center", marginBottom:20 }}>
+        <div style={{ display:"inline-block", background:"#7c4dff22", border:"1px solid #7c4dff44", borderRadius:20, padding:"3px 14px", fontSize:10, fontWeight:700, color:"#7c4dff", letterSpacing:2, marginBottom:8 }}>⚡ SIMPLE & FAST</div>
+        <div style={{ fontSize:22, fontWeight:900, fontFamily:"'Oswald',sans-serif", letterSpacing:2 }}>
+          <span style={{ color:"#fff" }}>HOW IT </span>
+          <span style={{ background:"linear-gradient(135deg,#f90,#ffcc00)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>WORKS</span>
+        </div>
+        <div style={{ fontSize:11, color:"#555", marginTop:4 }}>Get started in under 2 minutes</div>
+      </div>
+
+      {/* steps */}
+      <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+        {steps.map((s, i) => (
+          <div key={i} style={{ display:"flex", alignItems:"center", gap:14, background:"linear-gradient(135deg,#13132b,#1a1535)", border:`1px solid ${s.color}33`, borderRadius:14, padding:"14px 16px", position:"relative", overflow:"hidden" }}
+            onMouseEnter={e=>{e.currentTarget.style.borderColor=s.color+"88"; e.currentTarget.style.transform="translateX(4px)";}}
+            onMouseLeave={e=>{e.currentTarget.style.borderColor=s.color+"33"; e.currentTarget.style.transform="none";}}
+          >
+            <div style={{ position:"absolute", right:0, top:0, bottom:0, width:"35%", background:`linear-gradient(270deg,${s.color}08,transparent)`, pointerEvents:"none" }} />
+            {/* Number */}
+            <div style={{ fontSize:28, fontWeight:900, fontFamily:"'Oswald',sans-serif", color:s.color, opacity:0.25, minWidth:32, lineHeight:1 }}>{s.num}</div>
+            {/* Icon circle */}
+            <div style={{ width:44, height:44, borderRadius:"50%", background:`${s.color}22`, border:`2px solid ${s.color}44`, display:"flex", alignItems:"center", justifyContent:"center", fontSize:20, flexShrink:0, boxShadow:`0 0 12px ${s.color}33` }}>{s.icon}</div>
+            {/* Text */}
+            <div style={{ flex:1 }}>
+              <div style={{ fontSize:14, fontWeight:800, color:"#fff", letterSpacing:0.5, marginBottom:3 }}>{s.title}</div>
+              <div style={{ fontSize:10, color:"#777", lineHeight:1.5 }}>{s.desc}</div>
+            </div>
+            {/* Arrow */}
+            <div style={{ fontSize:16, color:s.color, opacity:0.6 }}>→</div>
+          </div>
+        ))}
+      </div>
+
+      {/* CTA */}
+      <div style={{ textAlign:"center", marginTop:18 }}>
+        <button onClick={()=>openWhatsApp("Hello, I want to create my ID on MangoPlay!")}
+          style={{ background:"linear-gradient(135deg,#25D366,#128C7E)", border:"none", color:"#fff", padding:"12px 28px", borderRadius:40, fontWeight:800, fontSize:13, cursor:"pointer", fontFamily:"'Oswald',sans-serif", letterSpacing:1, boxShadow:"0 4px 20px rgba(37,211,102,0.4)", display:"inline-flex", alignItems:"center", gap:8 }}>
+          <span>💬</span> CREATE FREE ID NOW
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   BONUS SECTION
+───────────────────────────────────────────── */
+function BonusSection() {
+  const bonuses = [
+    { icon:"🎁", title:"Welcome Bonus", value:"10%", desc:"On your first deposit", color:"#f90",    bg:"linear-gradient(135deg,#2a1500,#3a2000)" },
+    { icon:"👥", title:"Refer & Earn",  value:"₹200", desc:"Per friend you refer", color:"#25D366", bg:"linear-gradient(135deg,#002a10,#003a18)" },
+    { icon:"💰", title:"Daily Reload",  value:"5%",   desc:"On every redeposit",  color:"#00ccff", bg:"linear-gradient(135deg,#001a2a,#00253a)" },
+    { icon:"🏆", title:"Win Cashback",  value:"2%",   desc:"On every losing bet", color:"#b44dff", bg:"linear-gradient(135deg,#1a0030,#25004a)" },
+  ];
+  return (
+    <div style={{ background:"#0a0a1a", padding:"24px 14px 20px", position:"relative", overflow:"hidden" }}>
+      <div style={{ position:"absolute", inset:0, background:"repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(124,77,255,0.015) 40px,rgba(124,77,255,0.015) 41px)", pointerEvents:"none" }} />
+
+      {/* heading */}
+      <div style={{ textAlign:"center", marginBottom:18 }}>
+        <div style={{ display:"inline-block", background:"#f9900022", border:"1px solid #f9900044", borderRadius:20, padding:"3px 14px", fontSize:10, fontWeight:700, color:"#f90", letterSpacing:2, marginBottom:8 }}>🔥 EXCLUSIVE OFFERS</div>
+        <div style={{ fontSize:22, fontWeight:900, fontFamily:"'Oswald',sans-serif", letterSpacing:2 }}>
+          <span style={{ background:"linear-gradient(135deg,#f90,#ffcc00)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>BONUSES </span>
+          <span style={{ color:"#fff" }}>& REWARDS</span>
+        </div>
+        <div style={{ fontSize:11, color:"#555", marginTop:4 }}>More ways to win every day</div>
+      </div>
+
+      {/* bonus cards */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
+        {bonuses.map((b, i) => (
+          <div key={i} onClick={()=>openWhatsApp(`Hello, I want to claim the ${b.title} on MangoPlay!`)}
+            style={{ background:b.bg, border:`1px solid ${b.color}33`, borderRadius:14, padding:"16px 12px", cursor:"pointer", textAlign:"center", position:"relative", overflow:"hidden", transition:"all 0.25s" }}
+            onMouseEnter={e=>{e.currentTarget.style.transform="translateY(-4px)"; e.currentTarget.style.boxShadow=`0 8px 24px ${b.color}33`;}}
+            onMouseLeave={e=>{e.currentTarget.style.transform="none"; e.currentTarget.style.boxShadow="none";}}
+          >
+            <div style={{ position:"absolute", top:-20, right:-20, width:70, height:70, borderRadius:"50%", background:`radial-gradient(circle,${b.color}22,transparent 70%)`, pointerEvents:"none" }} />
+            <div style={{ fontSize:28, marginBottom:6, filter:`drop-shadow(0 0 8px ${b.color}66)` }}>{b.icon}</div>
+            <div style={{ fontSize:26, fontWeight:900, fontFamily:"'Oswald',sans-serif", color:b.color, lineHeight:1, marginBottom:2 }}>{b.value}</div>
+            <div style={{ fontSize:11, fontWeight:800, color:"#fff", marginBottom:3 }}>{b.title}</div>
+            <div style={{ fontSize:9, color:"#666" }}>{b.desc}</div>
+            <div style={{ marginTop:8, display:"inline-block", background:`${b.color}22`, border:`1px solid ${b.color}44`, borderRadius:10, padding:"2px 10px", fontSize:9, fontWeight:700, color:b.color }}>CLAIM NOW →</div>
+          </div>
+        ))}
+      </div>
+
+      {/* urgent ticker */}
+      <div style={{ marginTop:14, background:"linear-gradient(90deg,#1a0a00,#2a1500,#1a0a00)", border:"1px solid #f9900033", borderRadius:10, padding:"8px 14px", display:"flex", alignItems:"center", gap:8 }}>
+        <span style={{ animation:"blink 1s infinite", fontSize:14 }}>⏰</span>
+        <span style={{ fontSize:11, color:"#f90", fontWeight:700 }}>LIMITED TIME: </span>
+        <span style={{ fontSize:11, color:"#ffcc88" }}>Welcome bonus doubles this week only!</span>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   TESTIMONIALS
+───────────────────────────────────────────── */
+function Testimonials() {
+  const reviews = [
+    { name:"Rahul M.", city:"Mumbai", avatar:"👨", stars:5, text:"Withdrew ₹18,000 within 10 minutes! Best platform I've used. Support is top class 🔥", won:"₹18,000", game:"IPL Betting" },
+    { name:"Priya S.", city:"Delhi",  avatar:"👩", stars:5, text:"Color prediction game is so fun and the payouts are instant. Already referred 3 friends!", won:"₹6,500",  game:"Color Prediction" },
+    { name:"Arjun K.", city:"Pune",   avatar:"🧑", stars:5, text:"Got my ID in 2 minutes on WhatsApp. Deposited ₹500 and won ₹4,200 on MI vs CSK!",  won:"₹4,200",  game:"Cricket" },
+    { name:"Vikram T.", city:"Hyderabad", avatar:"👨", stars:5, text:"The welcome bonus is real! Got 10% extra on first deposit. Playing daily now 💪",  won:"₹9,800",  game:"Casino" },
+  ];
+
+  return (
+    <div style={{ background:"linear-gradient(160deg,#0d0d22,#0a1220)", padding:"24px 14px 20px", position:"relative", overflow:"hidden" }}>
+      <div style={{ position:"absolute", top:-20, right:-20, width:160, height:160, borderRadius:"50%", background:"radial-gradient(circle,#7c4dff12,transparent 70%)", pointerEvents:"none" }} />
+
+      {/* heading */}
+      <div style={{ textAlign:"center", marginBottom:18 }}>
+        <div style={{ display:"inline-block", background:"#7c4dff22", border:"1px solid #7c4dff44", borderRadius:20, padding:"3px 14px", fontSize:10, fontWeight:700, color:"#7c4dff", letterSpacing:2, marginBottom:8 }}>⭐ REAL WINNERS</div>
+        <div style={{ fontSize:22, fontWeight:900, fontFamily:"'Oswald',sans-serif", letterSpacing:2 }}>
+          <span style={{ color:"#fff" }}>WHAT OUR </span>
+          <span style={{ background:"linear-gradient(135deg,#f90,#ffcc00)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>PLAYERS SAY</span>
+        </div>
+        <div style={{ fontSize:11, color:"#555", marginTop:4 }}>50,000+ happy players across India</div>
+      </div>
+
+      {/* review cards */}
+      <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
+        {reviews.map((r, i) => (
+          <div key={i} style={{ background:"linear-gradient(135deg,#13132b,#1c1840)", border:"1px solid #7c4dff22", borderRadius:14, padding:"14px", position:"relative", overflow:"hidden", animation:`cardEntrance 0.5s ease ${i*0.1}s both` }}>
+            <div style={{ position:"absolute", top:0, right:0, bottom:0, width:"25%", background:"linear-gradient(270deg,#7c4dff08,transparent)", pointerEvents:"none" }} />
+
+            {/* top row */}
+            <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:8 }}>
+              <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+                <div style={{ width:36, height:36, borderRadius:"50%", background:"linear-gradient(135deg,#7c4dff,#b44dff)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:18, boxShadow:"0 0 10px #7c4dff44" }}>{r.avatar}</div>
+                <div>
+                  <div style={{ fontSize:12, fontWeight:800, color:"#fff" }}>{r.name}</div>
+                  <div style={{ fontSize:9, color:"#666" }}>📍 {r.city}</div>
+                </div>
+              </div>
+              {/* Won badge */}
+              <div style={{ background:"linear-gradient(135deg,#003a10,#004a18)", border:"1px solid #25D36644", borderRadius:8, padding:"4px 10px", textAlign:"center" }}>
+                <div style={{ fontSize:9, color:"#25D366", fontWeight:600 }}>WON</div>
+                <div style={{ fontSize:14, fontWeight:900, color:"#25D366", fontFamily:"'Oswald',sans-serif" }}>{r.won}</div>
+              </div>
+            </div>
+
+            {/* stars */}
+            <div style={{ display:"flex", gap:2, marginBottom:6 }}>
+              {[...Array(r.stars)].map((_,j) => <span key={j} style={{ fontSize:11, color:"#f90" }}>★</span>)}
+              <span style={{ fontSize:9, color:"#555", marginLeft:4, alignSelf:"center" }}>via {r.game}</span>
+            </div>
+
+            {/* review text */}
+            <div style={{ fontSize:11, color:"#aaa", lineHeight:1.6, fontStyle:"italic" }}>"{r.text}"</div>
+          </div>
+        ))}
+      </div>
+
+      {/* social proof bar */}
+      <div style={{ marginTop:14, background:"linear-gradient(135deg,#12122a,#1a1535)", border:"1px solid #7c4dff22", borderRadius:12, padding:"12px 16px", display:"flex", justifyContent:"space-around", alignItems:"center" }}>
+        {[{ val:"4.9★", label:"Rating" },{ val:"50K+", label:"Players" },{ val:"₹2Cr+", label:"Paid Out" }].map((s,i) => (
+          <div key={i} style={{ textAlign:"center" }}>
+            <div style={{ fontSize:16, fontWeight:900, fontFamily:"'Oswald',sans-serif", background:"linear-gradient(135deg,#f90,#ffcc00)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>{s.val}</div>
+            <div style={{ fontSize:9, color:"#555", fontWeight:600 }}>{s.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────
    TRUST & WHATSAPP FOOTER — REDESIGNED
 ───────────────────────────────────────────── */
 function TrustFooter() {
@@ -937,6 +1120,15 @@ export default function App() {
             <MatchCard key={i} match={match} index={i} visible={cardsVis} />
           ))}
         </div>
+
+        {/* ═══ HOW IT WORKS ═══ */}
+        <HowItWorks />
+
+        {/* ═══ BONUSES ═══ */}
+        <BonusSection />
+
+        {/* ═══ TESTIMONIALS ═══ */}
+        <Testimonials />
 
         {/* ═══ TRUST & WHATSAPP FOOTER ═══ */}
         <TrustFooter />
