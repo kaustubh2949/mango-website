@@ -14,7 +14,7 @@ const games = [
     multiplier: "UP TO 250x",
   },
   {
-    name: "FUN GAMES",
+    name: "TEEN PATTI",
     img: "/games/teenpatti_card.png",
     tag: "FUN",
     multiplier: "UP TO 500x",
@@ -51,8 +51,8 @@ export default function BigGames() {
 
             <div className="game-info">
               <div className="tag">{game.tag}</div>
-              <h3>{game.name}</h3>
-              <p>{game.multiplier}</p>
+              <div className="gc-title">{game.name}</div>
+              <div className="gc-sub">{game.multiplier}</div>
             </div>
           </div>
         ))}
