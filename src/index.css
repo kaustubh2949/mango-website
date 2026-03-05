@@ -1,98 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Oswald:wght@700&display=swap');
+/* index.css — base reset & page background */
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html {
+  background: #eef1f6;
+  scroll-behavior: smooth;
+}
+
 body {
-  background: #0d0d1a;
-  font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+  background: #eef1f6;
+  min-height: 100vh;
+  font-family: 'Rajdhani', 'Segoe UI', Tahoma, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #1a1a1a;
+  line-height: 1.5;
 }
 
-/* Hide scrollbar but keep functionality */
+#root {
+  min-height: 100vh;
+  background: #eef1f6;
+}
+
 ::-webkit-scrollbar {
   display: none;
-}
-
-/* ===== APP WIDTH CONTROL ===== */
-
-.app-container{
-  width:100%;
-}
-
-@media (min-width:1024px){
-
-.app-container{
-  max-width:1200px;
-  margin:0 auto;
-  padding:0 20px;
-}
-
-}
-
-/* Big Games Grid - Responsive Card Layout */
-.biggames-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
-}
-
-/* Mobile: 2 cards */
-@media (max-width: 550px) {
-  .biggames-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-}
-
-/* Tablet: 3 cards */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .biggames-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* Desktop: 4 cards */
-@media (min-width: 1024px) and (max-width: 1399px) {
-  .biggames-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-/* Large screens: 5 cards */
-@media (min-width: 1400px) {
-  .biggames-grid {
-    grid-template-columns: repeat(5, 1fr);
-  }
-}
-
-/* Ensure match cards look good on larger screens */
-.match-card {
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Category bar */
-.category-bar {
-  display: flex;
-  overflow-x: auto;
-  padding: 10px;
-  gap: 8px;
-}
-
-/* Bottom navigation */
-.bottom-nav-btn {
-  transition: all 0.2s ease;
-}
-
-/* Ultra wide screens */
-@media (min-width: 2000px) {
-  .app-container {
-    max-width: 1600px;
-  }
 }
