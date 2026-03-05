@@ -30,6 +30,25 @@ grid-template-columns:1fr 1fr;
 gap:14px;
 }
 
+/* ===== DESKTOP GRID ===== */
+
+@media (min-width:1024px){
+
+.biggames-grid{
+grid-template-columns:repeat(4,1fr);
+gap:18px;
+}
+
+}
+
+@media (min-width:1400px){
+
+.biggames-grid{
+grid-template-columns:repeat(5,1fr);
+}
+
+}
+
 /* ===== GAME CARD ===== */
 
 .game-card{

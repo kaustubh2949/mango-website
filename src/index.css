@@ -1,75 +1,98 @@
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Oswald:wght@700&family=Orbitron:wght@900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Oswald:wght@700&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
-margin: 0;
-font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
-background-color: #0a0a1a;
-color: white;
+  background: #0d0d1a;
+  font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+/* Hide scrollbar but keep functionality */
+::-webkit-scrollbar {
+  display: none;
 }
 
-.biggames-container{
-padding:16px;
+/* ===== APP WIDTH CONTROL ===== */
+
+.app-container{
+  width:100%;
 }
 
-.biggames-title{
-display:flex;
-justify-content:space-between;
-color:#ffcc00;
-font-weight:600;
-margin-bottom:12px;
+@media (min-width:1024px){
+
+.app-container{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 20px;
 }
 
-.biggames-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
 }
 
-.game-card{
-position:relative;
-border-radius:16px;
-overflow:hidden;
-cursor:pointer;
-height:140px;
-transition:all 0.3s ease;
+/* Big Games Grid - Responsive Card Layout */
+.biggames-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
 }
 
-.game-card:hover{
-transform:scale(1.03);
-box-shadow:0 0 25px rgba(124,77,255,0.6);
+/* Mobile: 2 cards */
+@media (max-width: 550px) {
+  .biggames-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
 }
 
-.game-img{
-width:100%;
-height:100%;
-object-fit:cover;
-filter:brightness(0.9);
+/* Tablet: 3 cards */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .biggames-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
-.game-overlay{
-position:absolute;
-inset:0;
-background:linear-gradient(to top,rgba(0,0,0,0.8),transparent);
+/* Desktop: 4 cards */
+@media (min-width: 1024px) and (max-width: 1399px) {
+  .biggames-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
-.game-info{
-position:absolute;
-bottom:10px;
-left:12px;
-color:white;
+/* Large screens: 5 cards */
+@media (min-width: 1400px) {
+  .biggames-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
 }
 
-.tag{
-background:red;
-font-size:10px;
-padding:3px 6px;
-border-radius:6px;
-display:inline-block;
-margin-bottom:4px;
+/* Ensure match cards look good on larger screens */
+.match-card {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Category bar */
+.category-bar {
+  display: flex;
+  overflow-x: auto;
+  padding: 10px;
+  gap: 8px;
+}
+
+/* Bottom navigation */
+.bottom-nav-btn {
+  transition: all 0.2s ease;
+}
+
+/* Ultra wide screens */
+@media (min-width: 2000px) {
+  .app-container {
+    max-width: 1600px;
+  }
 }
