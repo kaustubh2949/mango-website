@@ -7,14 +7,25 @@ export default function Navbar() {
         <div className="flex items-center gap-2">
           <span className="text-xl cursor-pointer text-white">☰</span>
 
-          <img
-            src="/logo.png"
-            alt="Mango Online Book"
-            className="h-12 w-auto object-contain"
-            style={{
-              filter: "drop-shadow(0 0 8px rgba(255,170,0,0.6))",
-            }}
-          />
+          <div className="flex items-center gap-1">
+            <img
+              src="/logo.png"
+              alt="Mango Online Book"
+              className="h-12 w-auto object-contain"
+              style={{
+                filter: "drop-shadow(0 0 8px rgba(255,170,0,0.6))",
+              }}
+            />
+
+            <div className="flex flex-col leading-none">
+              <span className="text-yellow-400 font-extrabold text-sm tracking-wide">
+                MANGO
+              </span>
+              <span className="text-[9px] text-gray-400 tracking-widest">
+                ONLINE BOOK
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* Right Buttons */}
