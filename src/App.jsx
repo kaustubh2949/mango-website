@@ -135,7 +135,7 @@ const LIVE_MATCHES = [
   { sport:"Cricket - IPL 2026", icon:"🏏", t1:"Lucknow Super Giants",        t2:"Sunrisers Hyderabad",   time:"31/03 (19:30)", h:"2.05", hv:"1.1M", d:"-", a:"1.92", av:"1.0M", live:false, matchNo:"Match 5",                 venue:"Ekana Stadium, Lucknow" },
 ];
 
-const TICKER = ["🏏 World Cup Final IND vs SA - Today 7PM  |  ","🎲 Color Prediction - 10X Bonus  |  ","🏆 IPL 2026 Starts 26 March 2026  |  ","💰 New Member? Get 10% Bonus  |  ","🎰 Evolution Casino - Live Tables Open  |  ","🔥 Teen Patti - Play & Win Big  |  "];
+const TICKER = ["🏏 World Cup Final IND vs NZ - Today 7PM  |  ","🎲 Color Prediction - 10X Bonus  |  ","🏆 IPL 2026 Starts 26 March 2026  |  ","💰 New Member? Get 10% Bonus  |  ","🎰 Evolution Casino - Live Tables Open  |  ","🔥 Teen Patti - Play & Win Big  |  "];
 
 /* ─────────────────────────────────────────
    HELPERS
