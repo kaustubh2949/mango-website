@@ -851,10 +851,6 @@ export default function App() {
             <span onClick={() => setMenuOpen(o=>!o)} style={{ fontSize:22, cursor:"pointer", color:"#fff", transition:"transform 0.35s", transform: menuOpen?"rotate(90deg)":"none", display:"inline-block" }}>☰</span>
             <div style={{ display:"flex", alignItems:"center", gap:5, cursor:"pointer" }} onClick={() => openWhatsApp("Hello!")}>
               <img src="/logo.png" alt="Mango Online Book" style={{ height:"34px", width:"auto", objectFit:"contain", display:"block", filter:"drop-shadow(0 0 8px rgba(255,170,0,0.7))", flexShrink:0 }} />
-              <div style={{ display:"flex", flexDirection:"column", justifyContent:"center", lineHeight:1.15 }}>
-                <span style={{ fontSize:15, fontWeight:900, fontFamily:"'Oswald',sans-serif", background:"linear-gradient(135deg,#f90,#ffcc00)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", letterSpacing:1.5, display:"block" }}>MANGO</span>
-                <span style={{ fontSize:9, fontWeight:700, color:"#ccc", letterSpacing:2, textTransform:"uppercase", display:"block" }}>ONLINE BOOK</span>
-              </div>
             </div>
           </div>
           <div style={{ display:"flex", gap:8, alignItems:"center" }}>
