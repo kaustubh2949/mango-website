@@ -803,7 +803,6 @@ function GameCard({ card, index }) {
     <div onClick={()=>openWhatsApp(`Hello, I want to play ${card.label} on MangoPlay!`)} onMouseEnter={()=>setHovered(true)} onMouseLeave={()=>setHovered(false)}
       style={{ position:"relative", borderRadius:16, overflow:"hidden", height:150, cursor:"pointer", background: card.bg, animation:`cardEntrance 0.5s ease ${0.05+index*0.1}s both`, transform: hovered ? "translateY(-8px) scale(1.05)" : "translateY(0) scale(1)", boxShadow: hovered ? `0 18px 40px ${card.glow}66, 0 0 0 1.5px ${card.glow}` : `0 5px 20px ${card.glow}33`, transition:"transform 0.3s cubic-bezier(.2,.8,.3,1), box-shadow 0.3s ease" }}
     >
-      {/* Add the image element here */}
       <img src={card.img} className="game-img" alt={card.label} style={{ position: "absolute", width: "100%", height: "100%", objectFit: "cover", zIndex: 1 }} />
       
       <div style={{ position:"absolute", top:"15%", left:"25%", width:100, height:100, borderRadius:"50%", background:`radial-gradient(circle,${card.glow}55,transparent 70%)`, transform: hovered ? "scale(1.8)" : "scale(0.8)", opacity: hovered ? 0.9 : 0.35, transition:"transform 0.45s ease, opacity 0.45s ease", zIndex:2, pointerEvents:"none" }}/>
@@ -882,13 +881,17 @@ export default function App() {
         {/* ═══ CATEGORY BAR ═══ */}
         <CategoryBar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-        {/* ═══ GAME CARDS ═══ */}
+        {/* ═══ GAME CARDS - UPDATED WITH RESPONSIVE 2x2 GRID ═══ */}
         <div style={{ padding:"10px 10px 6px" }}>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:10 }}>
             <span style={{ fontWeight:900, fontSize:15, color:"#f90", fontFamily:"'Oswald',sans-serif", letterSpacing:1, animation:"glow 2.5s infinite" }}>🎮 POPULAR GAMES</span>
             <span style={{ fontSize:10, color:"#7c4dff", fontWeight:700, cursor:"pointer" }} onClick={()=>openWhatsApp("Hello, I want to explore all games on MangoPlay!")}>VIEW ALL →</span>
           </div>
-          <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(250px, 1fr))", gap:"16px" }}>
+          <div style={{ 
+            display: "grid", 
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gap: "12px"
+          }}>
             {GAME_CARDS.map((card,i) => <GameCard key={card.label} card={card} index={i} />)}
           </div>
         </div>
