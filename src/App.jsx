@@ -32,11 +32,11 @@ const GlobalStyles = () => (
     /* ── White section card — the universal light wrapper ── */
     .sc {
       background: #ffffff;
-      border-radius: 18px;
+      border-radius: 14px;
       border: 1px solid #e6e8f2;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.08);
-      padding: 22px 16px;
-      margin: 0 12px 28px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+      padding: 14px 10px;
+      margin: 0 8px 22px;
     }
 
     /* ── Animations ── */
@@ -52,9 +52,18 @@ const GlobalStyles = () => (
     @keyframes slideDown     { from{transform:translateY(-20px);opacity:0} to{transform:translateY(0);opacity:1} }
     @keyframes cardEntrance  { from{transform:translateY(40px) scale(0.95);opacity:0} to{transform:translateY(0) scale(1);opacity:1} }
     @keyframes liveGlow      { 0%,100%{background:#e00;box-shadow:0 0 6px #e006} 50%{background:#ff4444;box-shadow:0 0 14px #ff44448a} }
-    @keyframes bannerFade    { 0%{opacity:0;transform:scale(1.04) translateX(30px)} 12%{opacity:1;transform:scale(1) translateX(0)} 80%{opacity:1} 100%{opacity:0;transform:scale(.97) translateX(-20px)} }
+    @keyframes bannerFade    { 0%{opacity:0} 15%{opacity:1} 85%{opacity:1} 100%{opacity:0} }
     @keyframes particleFloat { 0%,100%{transform:translateY(0) rotate(0deg);opacity:.15} 50%{transform:translateY(-20px) rotate(180deg);opacity:.3} }
     @keyframes shimmer       { 0%{left:-100%} 100%{left:200%} }
+    @keyframes shimmerSlide  { 0%{transform:translateX(-100%) skewX(-15deg);opacity:0} 40%{opacity:1} 100%{transform:translateX(300%) skewX(-15deg);opacity:0} }
+    @keyframes orbitGlow     { 0%{transform:rotate(0deg) translateX(38px) rotate(0deg);opacity:0.7} 100%{transform:rotate(360deg) translateX(38px) rotate(-360deg);opacity:0.7} }
+    @keyframes scanLine      { 0%{top:-4px;opacity:0.6} 100%{top:110%;opacity:0} }
+    @keyframes textReveal    { 0%{opacity:0;transform:translateY(18px) skewX(-6deg)} 100%{opacity:1;transform:translateY(0) skewX(0)} }
+    @keyframes accentPop     { 0%{opacity:0;transform:scale(0.7) rotate(-8deg)} 60%{transform:scale(1.08) rotate(2deg)} 100%{opacity:1;transform:scale(1) rotate(0)} }
+    @keyframes glowRing      { 0%,100%{box-shadow:0 0 0 0 rgba(255,170,0,0.6),0 0 30px rgba(255,170,0,0.2)} 50%{box-shadow:0 0 0 8px rgba(255,170,0,0),0 0 60px rgba(255,170,0,0.35)} }
+    @keyframes floatEmoji    { 0%,100%{transform:translateY(0) scale(1) rotate(-3deg)} 50%{transform:translateY(-12px) scale(1.08) rotate(3deg)} }
+    @keyframes bgPan         { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+    @keyframes starburst     { 0%,100%{transform:scale(1) rotate(0deg);opacity:0.08} 50%{transform:scale(1.4) rotate(180deg);opacity:0.18} }
 
     /* ── Hover classes ── */
     .odds-btn:hover        { transform:scale(1.06) !important; filter:brightness(1.25) !important; }
@@ -77,10 +86,9 @@ const GlobalStyles = () => (
    DATA
 ───────────────────────────────────────── */
 const BANNERS = [
-  { type:"mango_welcome" },
-  { title:"LIVE CASINO",  brand:"EVOLUTION", sub:"GAMING",     bonus:"🃏 UNLIMITED WINS AWAIT YOU", bg:"linear-gradient(135deg,#200000,#4a0010 45%,#001800)", accent:"#ff4444", emoji:"🎰" },
-  { title:"INSTANT WIN",  brand:"COLOR",     sub:"PREDICTION", bonus:"🎲 WIN UP TO 9X YOUR BET",    bg:"linear-gradient(135deg,#001a40,#003380 45%,#000d1a)", accent:"#00ccff", emoji:"🎲" },
-  { title:"MINES GAME",   brand:"INSTANT",   sub:"PAYOUT",     bonus:"💣 MAX MULTIPLIER 2500X",     bg:"linear-gradient(135deg,#001400,#003300 45%,#000a00)", accent:"#00ff88", emoji:"💣" },
+  { type:"join_cta"      },
+  { type:"how_it_works"  },
+  { type:"bonuses"       },
 ];
 
 const CATEGORY_TABS = [
@@ -270,70 +278,242 @@ function MatchCard({ match, index, visible }) {
   );
 }
 
-/* ── MangoWelcomeBanner (dark hero — unchanged) ── */
+/* ── MangoWelcomeBanner (dark hero — premium) ── */
 function MangoWelcomeBanner({ animKey }) {
   return (
-    <div style={{ position:"relative", overflow:"hidden", minHeight:220, background:"linear-gradient(135deg,#0a0015,#1e0040 35%,#0d1040 70%,#050a20)" }}>
-      {[...Array(16)].map((_,i) => (
-        <div key={i} style={{ position:"absolute", width:2, height:2, borderRadius:"50%", background:i%4===0?"#f90":"#fff", top:`${3+i*6}%`, left:`${2+i*7}%`, opacity:0.2+(i%5)*0.1, animation:`particleFloat ${2+i*0.3}s ease-in-out infinite`, animationDelay:`${i*0.15}s`, pointerEvents:"none" }} />
+    <div style={{ position:"relative", overflow:"hidden", minHeight:200, background:"linear-gradient(135deg,#0a0015,#1e0040 35%,#0d1040 70%,#050a20)" }}>
+
+      {/* Animated bg gradient pan */}
+      <div style={{ position:"absolute", inset:0, background:"linear-gradient(120deg,#0a0015,#2a0060,#0d1040,#1a0035)", backgroundSize:"300% 300%", animation:"bgPan 8s ease infinite", opacity:0.7, zIndex:0 }} />
+
+      {/* Starburst decorative rings */}
+      <div style={{ position:"absolute", top:"50%", left:"58%", width:180, height:180, borderRadius:"50%", border:"1px solid rgba(255,170,0,0.08)", transform:"translate(-50%,-50%)", animation:"starburst 6s ease-in-out infinite", zIndex:1 }} />
+      <div style={{ position:"absolute", top:"50%", left:"58%", width:120, height:120, borderRadius:"50%", border:"1px solid rgba(100,100,255,0.10)", transform:"translate(-50%,-50%)", animation:"starburst 4s ease-in-out infinite reverse", zIndex:1 }} />
+
+      {/* Shimmer sweep */}
+      <div style={{ position:"absolute", inset:0, zIndex:2, pointerEvents:"none", overflow:"hidden" }}>
+        <div style={{ position:"absolute", top:0, bottom:0, width:"40%", background:"linear-gradient(90deg,transparent,rgba(255,255,255,0.04),transparent)", animation:"shimmerSlide 3.5s ease-in-out infinite", animationDelay:"1s" }} />
+      </div>
+
+      {/* Scan line */}
+      <div style={{ position:"absolute", left:0, right:0, height:2, background:"linear-gradient(90deg,transparent,rgba(124,77,255,0.4),transparent)", animation:"scanLine 3s linear infinite", zIndex:3, pointerEvents:"none" }} />
+
+      {/* Particles */}
+      {[...Array(20)].map((_,i) => (
+        <div key={i} style={{ position:"absolute", width: i%3===0?3:2, height: i%3===0?3:2, borderRadius:"50%", background:i%4===0?"#f90":i%4===1?"#7c4dff":i%4===2?"#00dd88":"#fff", top:`${4+i*5}%`, left:`${3+i*6}%`, opacity:0.15+(i%5)*0.08, animation:`particleFloat ${2.2+i*0.25}s ease-in-out infinite`, animationDelay:`${i*0.12}s`, pointerEvents:"none" }} />
       ))}
-      <div key={`c-${animKey}`} style={{ position:"relative", zIndex:2, padding:"24px 18px", display:"flex", alignItems:"center", minHeight:220 }}>
-        <div style={{ flex:"0 0 60%", display:"flex", flexDirection:"column", gap:2 }}>
-          <div style={{ fontSize:13, fontWeight:700, color:"#fff", letterSpacing:1, marginBottom:2, animation:"slideInLeft 0.4s ease both" }}>WELCOME TO</div>
-          <div style={{ fontSize:42, fontWeight:900, lineHeight:0.9, fontFamily:"'Oswald',sans-serif", letterSpacing:3, background:"linear-gradient(135deg,#a0d0ff,#4a9eff,#a0d0ff)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", marginBottom:2, animation:"slideInLeft 0.5s ease both" }}>MANGO</div>
-          <div style={{ fontSize:22, fontWeight:900, color:"#fff", letterSpacing:1, fontFamily:"'Oswald',sans-serif", marginBottom:8, animation:"slideInLeft 0.6s ease both" }}>ONLINE BOOK</div>
-          <div style={{ marginTop:4, border:"2px solid #00dd44", borderRadius:30, padding:"6px 16px", display:"inline-flex", alignItems:"center", gap:6, fontSize:11, fontWeight:700, width:"fit-content", animation:"fadeUp 0.8s ease both" }}>
-            <span style={{ color:"#00dd44", fontSize:14 }}>🎁</span>
-            <span style={{ color:"#00dd44" }}>GET </span>
-            <span style={{ color:"#ffaa00", fontWeight:900 }}>10% BONUS</span>
-            <span style={{ color:"#00dd44" }}> ON NEW ID</span>
+
+      {/* Content */}
+      <div key={`c-${animKey}`} style={{ position:"relative", zIndex:4, padding:"22px 16px", display:"flex", alignItems:"center", minHeight:200 }}>
+
+        {/* Left text */}
+        <div style={{ flex:"0 0 58%", display:"flex", flexDirection:"column", gap:2 }}>
+          <div style={{ fontSize:10, fontWeight:700, color:"#a78bfa", letterSpacing:4, marginBottom:2, animation:"textReveal 0.4s cubic-bezier(.2,.8,.3,1) both", textTransform:"uppercase" }}>
+            🥭 Welcome To
           </div>
+          <div style={{ fontSize:46, fontWeight:900, lineHeight:0.88, fontFamily:"'Oswald',sans-serif", letterSpacing:3, background:"linear-gradient(135deg,#ffffff,#c0a0ff,#7c4dff)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", animation:"textReveal 0.5s cubic-bezier(.2,.8,.3,1) both", animationDelay:"0.05s", filter:"drop-shadow(0 0 20px rgba(124,77,255,0.6))" }}>
+            MANGO
+          </div>
+          <div style={{ fontSize:16, fontWeight:900, color:"#e0d0ff", letterSpacing:2, fontFamily:"'Oswald',sans-serif", animation:"textReveal 0.5s cubic-bezier(.2,.8,.3,1) both", animationDelay:"0.1s" }}>
+            ONLINE BOOK
+          </div>
+
+          {/* Bonus badge */}
+          <div style={{ marginTop:8, display:"inline-flex", alignItems:"center", gap:6, background:"rgba(255,170,0,0.12)", border:"1.5px solid rgba(255,170,0,0.4)", borderRadius:20, padding:"4px 12px", width:"fit-content", animation:"accentPop 0.6s cubic-bezier(.2,.8,.3,1) both", animationDelay:"0.2s", boxShadow:"0 0 16px rgba(255,170,0,0.2)" }}>
+            <span style={{ fontSize:12 }}>🎁</span>
+            <span style={{ fontSize:10, fontWeight:800, color:"#ffcc00", letterSpacing:0.5 }}>10% BONUS ON NEW ID</span>
+          </div>
+
+          {/* CTA button */}
+          <button onClick={() => openWhatsApp("Hello, I want to create my ID on MangoPlay!")}
+            style={{ marginTop:10, background:"linear-gradient(135deg,#25D366,#128C7E)", border:"none", color:"#fff", padding:"9px 18px", borderRadius:30, fontWeight:800, fontSize:11, cursor:"pointer", fontFamily:"'Oswald',sans-serif", letterSpacing:1.2, boxShadow:"0 4px 20px rgba(37,211,102,0.45)", display:"inline-flex", alignItems:"center", gap:6, animation:"accentPop 0.6s cubic-bezier(.2,.8,.3,1) both", animationDelay:"0.3s", width:"fit-content" }}>
+            <span style={{ fontSize:14 }}>💬</span> CREATE ID ON WHATSAPP
+          </button>
         </div>
-        <div style={{ flex:"0 0 40%", position:"relative", height:140, animation:"slideInRight 0.6s ease both" }}>
-          <div style={{ position:"absolute", bottom:10, left:"10%", fontSize:70, lineHeight:1, filter:"drop-shadow(0 0 15px #4488ff)", transform:"scaleX(-1)", animation:"float 3s ease-in-out infinite" }}>🏏</div>
-          <div style={{ position:"absolute", top:5,    right:"5%",  fontSize:45, filter:"drop-shadow(0 0 10px #ff5555)", animation:"float 2.8s ease-in-out infinite", animationDelay:"0.5s" }}>⚽</div>
-          <div style={{ position:"absolute", top:"35%",right:"30%", fontSize:30, filter:"drop-shadow(0 0 8px #f9a826)",  animation:"float 3.2s ease-in-out infinite", animationDelay:"0.2s" }}>🏀</div>
-          <div style={{ position:"absolute", bottom:20, right:"15%",fontSize:28, filter:"drop-shadow(0 0 8px #ccff00)",  animation:"float 2.5s ease-in-out infinite", animationDelay:"0.7s" }}>🎾</div>
+
+        {/* Right emoji cluster */}
+        <div style={{ flex:"0 0 42%", position:"relative", height:160, animation:"textReveal 0.6s ease both", animationDelay:"0.15s" }}>
+          {/* Glow ring behind main emoji */}
+          <div style={{ position:"absolute", bottom:14, left:"8%", width:72, height:72, borderRadius:"50%", background:"radial-gradient(circle,rgba(68,136,255,0.3),transparent 70%)", animation:"glowRing 2.5s ease-in-out infinite" }} />
+          <div style={{ position:"absolute", bottom:8, left:"6%", fontSize:68, lineHeight:1, filter:"drop-shadow(0 0 18px #4488ff) drop-shadow(0 4px 12px rgba(0,0,0,0.5))", transform:"scaleX(-1)", animation:"floatEmoji 3s ease-in-out infinite" }}>🏏</div>
+          <div style={{ position:"absolute", top:4, right:"4%", fontSize:42, filter:"drop-shadow(0 0 12px #ff5555)", animation:"floatEmoji 2.8s ease-in-out infinite", animationDelay:"0.5s" }}>⚽</div>
+          <div style={{ position:"absolute", top:"38%", right:"32%", fontSize:28, filter:"drop-shadow(0 0 10px #f9a826)", animation:"floatEmoji 3.2s ease-in-out infinite", animationDelay:"0.2s" }}>🏀</div>
+          <div style={{ position:"absolute", bottom:22, right:"12%", fontSize:24, filter:"drop-shadow(0 0 8px #ccff00)", animation:"floatEmoji 2.5s ease-in-out infinite", animationDelay:"0.7s" }}>🎾</div>
+          {/* Sparkle dots around emojis */}
+          <div style={{ position:"absolute", top:"15%", left:"20%", width:4, height:4, borderRadius:"50%", background:"#f90", animation:"blink 1.4s ease-in-out infinite", boxShadow:"0 0 6px #f90" }} />
+          <div style={{ position:"absolute", bottom:"30%", right:"22%", width:3, height:3, borderRadius:"50%", background:"#7c4dff", animation:"blink 1.8s ease-in-out infinite", animationDelay:"0.6s", boxShadow:"0 0 6px #7c4dff" }} />
+          <div style={{ position:"absolute", top:"55%", left:"12%", width:3, height:3, borderRadius:"50%", background:"#00dd88", animation:"blink 2.1s ease-in-out infinite", animationDelay:"0.3s", boxShadow:"0 0 6px #00dd88" }} />
         </div>
       </div>
     </div>
   );
 }
 
-function HeroBanner() {
-  const [current, setCurrent] = useState(0);
-  const [animKey, setAnimKey] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => { setCurrent(c => (c+1)%BANNERS.length); setAnimKey(k => k+1); }, 3800);
-    return () => clearInterval(t);
-  }, []);
-  const b = BANNERS[current];
-  const dots = (
-    <div style={{ position:"absolute", bottom:8, left:"50%", transform:"translateX(-50%)", display:"flex", gap:6, zIndex:3 }}>
-      {BANNERS.map((_,i) => (
-        <div key={i} onClick={() => { setCurrent(i); setAnimKey(k=>k+1); }}
-          style={{ width:i===current?20:6, height:6, borderRadius:3, background:i===current?(b.accent||"#f90"):"#ffffff33", transition:"all 0.4s", cursor:"pointer" }} />
-      ))}
-    </div>
-  );
-  if (b.type === "mango_welcome") {
-    return <div style={{ position:"relative" }}><MangoWelcomeBanner animKey={animKey} />{dots}</div>;
-  }
+/* ── shared dark slide shell ── */
+function SlideShell({ animKey, accentColor, children, dots }) {
   return (
-    <div style={{ position:"relative", overflow:"hidden", minHeight:220 }}>
-      <div key={`bg-${animKey}`} style={{ position:"absolute", inset:0, background:b.bg, animation:"bannerFade 3.8s ease forwards" }} />
-      <div style={{ position:"relative", zIndex:2, padding:"22px 18px", display:"flex", alignItems:"center", justifyContent:"space-between", minHeight:220 }}>
-        <div style={{ flex:1 }}>
-          <div style={{ fontSize:11, color:"#bbb", letterSpacing:3, animation:"slideInLeft 0.5s ease both" }}>{b.title}</div>
-          <div style={{ fontSize:38, fontWeight:900, color:b.accent, lineHeight:1, fontFamily:"'Oswald',sans-serif", letterSpacing:2, animation:"glow 2s infinite,slideInLeft 0.6s ease both" }}>{b.brand}</div>
-          <div style={{ fontSize:17, fontWeight:700, color:"#fff", letterSpacing:1, animation:"slideInLeft 0.7s ease both" }}>{b.sub}</div>
-          <div style={{ marginTop:12, background:`linear-gradient(90deg,${b.accent}cc,${b.accent}44)`, borderRadius:20, padding:"5px 14px", display:"inline-block", fontSize:11, fontWeight:700, color:"#fff", border:`1px solid ${b.accent}66`, animation:"pulse 2s infinite,fadeUp 0.9s ease both" }}>{b.bonus}</div>
-        </div>
-        <div style={{ fontSize:70, lineHeight:1, animation:"slideInRight 0.6s ease both,float 3s ease-in-out infinite", filter:`drop-shadow(0 0 24px ${b.accent}99)`, flexShrink:0, marginLeft:12 }}>{b.emoji}</div>
+    <div style={{ position:"relative", overflow:"hidden", minHeight:200, background:"linear-gradient(135deg,#060010 0%,#1a0845 35%,#0b1040 65%,#001828 100%)" }}>
+      <div style={{ position:"absolute", inset:0, background:"linear-gradient(120deg,#0a0015,#2a0060,#0d1040,#001828)", backgroundSize:"300% 300%", animation:"bgPan 8s ease infinite", opacity:0.7, pointerEvents:"none" }} />
+      <div style={{ position:"absolute", top:"10%", left:"5%", width:140, height:140, borderRadius:"50%", background:`radial-gradient(circle,${accentColor}22,transparent 70%)`, pointerEvents:"none" }} />
+      <div style={{ position:"absolute", bottom:"5%", right:"6%", width:110, height:110, borderRadius:"50%", background:"radial-gradient(circle,rgba(37,211,102,0.15),transparent 70%)", pointerEvents:"none" }} />
+      <div style={{ position:"absolute", inset:0, overflow:"hidden", pointerEvents:"none", zIndex:2 }}>
+        <div style={{ position:"absolute", top:0, bottom:0, width:"35%", background:"linear-gradient(90deg,transparent,rgba(255,255,255,0.04),transparent)", animation:"shimmerSlide 3.5s ease-in-out infinite", animationDelay:"1s" }} />
+      </div>
+      <div style={{ position:"absolute", left:0, right:0, height:1.5, background:`linear-gradient(90deg,transparent,${accentColor}66,transparent)`, animation:"scanLine 3s linear infinite", zIndex:3, pointerEvents:"none" }} />
+      <div style={{ position:"absolute", top:0, left:0, right:0, height:2, background:"linear-gradient(90deg,transparent,#7c4dff,#f90,#25D366,transparent)", zIndex:4 }} />
+      {[...Array(12)].map((_,i) => (
+        <div key={i} style={{ position:"absolute", width:i%3===0?3:2, height:i%3===0?3:2, borderRadius:"50%", background:i%4===0?"#f90":i%4===1?"#7c4dff":i%4===2?"#25D366":"#fff", top:`${4+i*8}%`, left:`${4+i*9}%`, opacity:0.08+(i%4)*0.05, animation:`particleFloat ${2+i*0.28}s ease-in-out infinite`, animationDelay:`${i*0.13}s`, pointerEvents:"none" }} />
+      ))}
+      <div key={`s-${animKey}`} style={{ position:"relative", zIndex:4, minHeight:200, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"16px 18px 28px", textAlign:"center" }}>
+        {children}
       </div>
       {dots}
     </div>
   );
+}
+
+/* ── SLIDE 2 — JOIN MANGO TODAY ── */
+function JoinCtaSlide({ animKey, dots }) {
+  return (
+    <SlideShell animKey={animKey} accentColor="#25D366" dots={dots}>
+      <div style={{ display:"inline-flex", alignItems:"center", gap:5, background:"rgba(255,170,0,0.10)", border:"1px solid rgba(255,170,0,0.28)", borderRadius:20, padding:"3px 12px", marginBottom:8, animation:"textReveal 0.4s cubic-bezier(.2,.8,.3,1) both" }}>
+        <span style={{ fontSize:11 }}>🥭</span>
+        <span style={{ fontSize:8, fontWeight:700, color:"#f90", letterSpacing:2, textTransform:"uppercase" }}>India's Trusted Online Book · Since 2001</span>
+      </div>
+      <div style={{ fontFamily:"'Oswald',sans-serif", letterSpacing:2, lineHeight:1, marginBottom:4, animation:"textReveal 0.45s cubic-bezier(.2,.8,.3,1) both", animationDelay:"0.06s" }}>
+        <span style={{ fontSize:32, fontWeight:900, color:"#fff" }}>JOIN </span>
+        <span style={{ fontSize:32, fontWeight:900, background:"linear-gradient(135deg,#f90,#ffcc00)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", filter:"drop-shadow(0 0 16px rgba(255,153,0,0.55))" }}>MANGO </span>
+        <span style={{ fontSize:32, fontWeight:900, color:"#fff" }}>TODAY</span>
+      </div>
+      <div style={{ fontSize:10, color:"#90a8c8", fontWeight:600, letterSpacing:1, marginBottom:14, animation:"textReveal 0.45s cubic-bezier(.2,.8,.3,1) both", animationDelay:"0.1s" }}>
+        ⚡ Instant ID &nbsp;·&nbsp; 💸 Same-Day Withdrawal &nbsp;·&nbsp; 🎧 24/7 Support
+      </div>
+      <button onClick={() => openWhatsApp("Hello, I want to create my ID on MangoPlay!")}
+        style={{ position:"relative", overflow:"hidden", display:"inline-flex", alignItems:"center", gap:8, background:"linear-gradient(135deg,#25D366,#128C7E)", border:"none", color:"#fff", padding:"11px 22px", borderRadius:40, fontWeight:900, fontSize:12, cursor:"pointer", fontFamily:"'Oswald',sans-serif", letterSpacing:1.2, boxShadow:"0 0 0 3px rgba(37,211,102,0.2),0 6px 26px rgba(37,211,102,0.5)", marginBottom:14, animation:"accentPop 0.55s cubic-bezier(.2,.8,.3,1) both", animationDelay:"0.18s" }}>
+        <div style={{ position:"absolute", top:0, left:"-100%", width:"60%", height:"100%", background:"linear-gradient(90deg,transparent,rgba(255,255,255,0.22),transparent)", animation:"shimmer 2.2s infinite" }} />
+        <span style={{ fontSize:16, position:"relative", zIndex:1 }}>💬</span>
+        <span style={{ position:"relative", zIndex:1 }}>GET YOUR ID ON WHATSAPP</span>
+      </button>
+      <div style={{ display:"flex", justifyContent:"center", gap:8, flexWrap:"wrap", animation:"accentPop 0.55s cubic-bezier(.2,.8,.3,1) both", animationDelay:"0.24s" }}>
+        {[{ icon:"👥", val:"50K+", label:"Players" },{ icon:"💰", val:"₹2Cr+", label:"Paid Daily" },{ icon:"🎁", val:"10%", label:"Welcome Bonus" }].map(s => (
+          <div key={s.label} style={{ display:"flex", alignItems:"center", gap:5, background:"rgba(255,255,255,0.06)", border:"1px solid rgba(255,255,255,0.10)", borderRadius:10, padding:"5px 11px" }}>
+            <span style={{ fontSize:12 }}>{s.icon}</span>
+            <div style={{ lineHeight:1.2, textAlign:"left" }}>
+              <div style={{ fontSize:11, fontWeight:900, color:"#f90", fontFamily:"'Oswald',sans-serif" }}>{s.val}</div>
+              <div style={{ fontSize:7, color:"#778899", letterSpacing:0.5, textTransform:"uppercase" }}>{s.label}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </SlideShell>
+  );
+}
+
+/* ── SLIDE 3 — HOW IT WORKS ── */
+function HowItWorksSlide({ animKey, dots }) {
+  const steps = [
+    { num:"01", icon:"💬", title:"Message Us",    desc:"Click WhatsApp & send a message to create your free ID instantly", color:"#25D366" },
+    { num:"02", icon:"💳", title:"Add Funds",     desc:"Deposit via PhonePe, GPay, Paytm or UPI — minimum just ₹100",    color:"#f90"    },
+    { num:"03", icon:"🏆", title:"Start Winning", desc:"Place bets on IPL, Casino, Color Prediction & win real cash",      color:"#7c4dff" },
+  ];
+  return (
+    <SlideShell animKey={animKey} accentColor="#7c4dff" dots={dots}>
+      {/* Chip */}
+      <div style={{ display:"inline-flex", alignItems:"center", gap:5, background:"rgba(124,77,255,0.12)", border:"1px solid rgba(124,77,255,0.3)", borderRadius:20, padding:"3px 12px", marginBottom:6, animation:"textReveal 0.4s cubic-bezier(.2,.8,.3,1) both" }}>
+        <span style={{ fontSize:9, fontWeight:700, color:"#a78bfa", letterSpacing:2, textTransform:"uppercase" }}>⚡ Simple &amp; Fast</span>
+      </div>
+      {/* Heading */}
+      <div style={{ fontFamily:"'Oswald',sans-serif", letterSpacing:2, lineHeight:1, marginBottom:2, animation:"textReveal 0.4s cubic-bezier(.2,.8,.3,1) both", animationDelay:"0.05s" }}>
+        <span style={{ fontSize:26, fontWeight:900, color:"#fff" }}>HOW IT </span>
+        <span style={{ fontSize:26, fontWeight:900, background:"linear-gradient(135deg,#f90,#ffcc00)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>WORKS</span>
+      </div>
+      <div style={{ fontSize:9, color:"#90a8c8", fontWeight:600, marginBottom:10, animation:"textReveal 0.4s both", animationDelay:"0.08s" }}>Get started in under 2 minutes</div>
+      {/* Steps */}
+      <div style={{ display:"flex", flexDirection:"column", gap:6, width:"100%", maxWidth:340, animation:"textReveal 0.45s cubic-bezier(.2,.8,.3,1) both", animationDelay:"0.12s" }}>
+        {steps.map((s,i) => (
+          <div key={i} style={{ display:"flex", alignItems:"center", gap:10, background:"rgba(255,255,255,0.05)", border:`1px solid ${s.color}22`, borderRadius:10, padding:"7px 11px", textAlign:"left" }}>
+            <span style={{ fontSize:9, fontWeight:900, fontFamily:"'Oswald',sans-serif", color:s.color, opacity:0.5, minWidth:18 }}>{s.num}</span>
+            <span style={{ fontSize:16 }}>{s.icon}</span>
+            <div style={{ flex:1 }}>
+              <div style={{ fontSize:11, fontWeight:800, color:"#fff", lineHeight:1.1 }}>{s.title}</div>
+              <div style={{ fontSize:8, color:"#778899", lineHeight:1.3, marginTop:1 }}>{s.desc}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      {/* CTA */}
+      <button onClick={() => openWhatsApp("Hello, I want to create my ID on MangoPlay!")}
+        style={{ position:"relative", overflow:"hidden", display:"inline-flex", alignItems:"center", gap:8, background:"linear-gradient(135deg,#25D366,#128C7E)", border:"none", color:"#fff", padding:"9px 20px", borderRadius:40, fontWeight:900, fontSize:11, cursor:"pointer", fontFamily:"'Oswald',sans-serif", letterSpacing:1.2, boxShadow:"0 4px 20px rgba(37,211,102,0.45)", marginTop:10, animation:"accentPop 0.5s cubic-bezier(.2,.8,.3,1) both", animationDelay:"0.2s" }}>
+        <div style={{ position:"absolute", top:0, left:"-100%", width:"60%", height:"100%", background:"linear-gradient(90deg,transparent,rgba(255,255,255,0.22),transparent)", animation:"shimmer 2.2s infinite" }} />
+        <span style={{ fontSize:14, position:"relative", zIndex:1 }}>💬</span>
+        <span style={{ position:"relative", zIndex:1 }}>CREATE YOUR ID NOW</span>
+      </button>
+    </SlideShell>
+  );
+}
+
+/* ── SLIDE 4 — BONUSES & REWARDS ── */
+function BonusesSlide({ animKey, dots }) {
+  const bonuses = [
+    { icon:"🎁", val:"10%",  title:"Welcome Bonus", desc:"On your first deposit", color:"#f90"    },
+    { icon:"👥", val:"₹200", title:"Refer & Earn",  desc:"Per friend you refer",  color:"#25D366" },
+    { icon:"💰", val:"5%",   title:"Daily Reload",  desc:"On every redeposit",    color:"#00ccff" },
+    { icon:"🏆", val:"2%",   title:"Win Cashback",  desc:"On every losing bet",   color:"#b44dff" },
+  ];
+  return (
+    <SlideShell animKey={animKey} accentColor="#f90" dots={dots}>
+      {/* Chip */}
+      <div style={{ display:"inline-flex", alignItems:"center", gap:5, background:"rgba(255,153,0,0.10)", border:"1px solid rgba(255,153,0,0.3)", borderRadius:20, padding:"3px 12px", marginBottom:6, animation:"textReveal 0.4s cubic-bezier(.2,.8,.3,1) both" }}>
+        <span style={{ fontSize:9, fontWeight:700, color:"#f90", letterSpacing:2, textTransform:"uppercase" }}>🔥 Exclusive Offers</span>
+      </div>
+      {/* Heading */}
+      <div style={{ fontFamily:"'Oswald',sans-serif", letterSpacing:2, lineHeight:1, marginBottom:2, animation:"textReveal 0.4s cubic-bezier(.2,.8,.3,1) both", animationDelay:"0.05s" }}>
+        <span style={{ fontSize:26, fontWeight:900, background:"linear-gradient(135deg,#f90,#ffcc00)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>BONUSES </span>
+        <span style={{ fontSize:26, fontWeight:900, color:"#fff" }}>&amp; REWARDS</span>
+      </div>
+      <div style={{ fontSize:9, color:"#90a8c8", fontWeight:600, marginBottom:10, animation:"textReveal 0.4s both", animationDelay:"0.08s" }}>More ways to win every day</div>
+      {/* 2×2 grid */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:6, width:"100%", maxWidth:320, animation:"accentPop 0.5s cubic-bezier(.2,.8,.3,1) both", animationDelay:"0.12s" }}>
+        {bonuses.map((b,i) => (
+          <div key={i}
+            onClick={() => openWhatsApp(`Hello, I want to claim the ${b.title} on MangoPlay!`)}
+            style={{ background:"rgba(255,255,255,0.05)", border:`1px solid ${b.color}25`, borderRadius:10, padding:"8px 8px 6px", cursor:"pointer", display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
+            <span style={{ fontSize:18 }}>{b.icon}</span>
+            <div style={{ fontSize:13, fontWeight:900, color:b.color, fontFamily:"'Oswald',sans-serif", lineHeight:1 }}>{b.val}</div>
+            <div style={{ fontSize:9, fontWeight:800, color:"#e0d8ff", lineHeight:1.1 }}>{b.title}</div>
+            <div style={{ fontSize:7, color:"#556677", lineHeight:1.2, marginBottom:2 }}>{b.desc}</div>
+            <div style={{ background:`${b.color}18`, border:`1px solid ${b.color}33`, borderRadius:6, padding:"2px 8px", fontSize:7, fontWeight:700, color:b.color, letterSpacing:0.5 }}>CLAIM NOW</div>
+          </div>
+        ))}
+      </div>
+    </SlideShell>
+  );
+}
+
+/* ── dot accent colors per slide index ── */
+const SLIDE_ACCENT = ["#25D366", "#7c4dff", "#f90"];
+
+function HeroBanner() {
+  const [current, setCurrent] = useState(0);
+  const [animKey, setAnimKey] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => { setCurrent(c => (c+1)%BANNERS.length); setAnimKey(k => k+1); }, 4000);
+    return () => clearInterval(t);
+  }, []);
+  const b = BANNERS[current];
+  const dots = (
+    <div style={{ position:"absolute", bottom:8, left:"50%", transform:"translateX(-50%)", display:"flex", gap:6, zIndex:5 }}>
+      {BANNERS.map((_,i) => (
+        <div key={i} onClick={() => { setCurrent(i); setAnimKey(k=>k+1); }}
+          style={{ width:i===current?20:6, height:6, borderRadius:3, background:i===current?SLIDE_ACCENT[i]:"#ffffff33", transition:"all 0.4s", cursor:"pointer" }} />
+      ))}
+    </div>
+  );
+  if (b.type === "mango_welcome")  return <div style={{ position:"relative" }}><MangoWelcomeBanner animKey={animKey} />{dots}</div>;
+  if (b.type === "join_cta")       return <JoinCtaSlide      animKey={animKey} dots={dots} />;
+  if (b.type === "how_it_works")   return <HowItWorksSlide   animKey={animKey} dots={dots} />;
+  if (b.type === "bonuses")        return <BonusesSlide      animKey={animKey} dots={dots} />;
+  return null;
 }
 
 /* ── TickerBar — dark, below hero ── */
@@ -351,7 +531,7 @@ function TickerBar() {
 function CategoryBar({ activeTab, setActiveTab }) {
   const [hov, setHov] = useState(null);
   return (
-    <div style={{ display:"flex", overflowX:"auto", background:"#1a1a2e", padding:"10px 10px", gap:8, borderBottom:"2px solid #7c4dff22" }}>
+    <div style={{ display:"flex", overflowX:"auto", background:"#1a1a2e", padding:"6px 8px", gap:8, borderBottom:"2px solid #7c4dff22" }}>
       {CATEGORY_TABS.map((tab, i) => {
         const active = activeTab === tab.label;
         const lit    = active || hov === i;
@@ -405,7 +585,7 @@ function GameCard({ card, index }) {
     <div className="game-card"
       onClick={() => openWhatsApp(`Hello, I want to play ${card.label} on MangoPlay!`)}
       onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
-      style={{ position:"relative", borderRadius:16, overflow:"hidden", height:150, cursor:"pointer", background:card.bg, animation:`cardEntrance 0.5s ease ${0.05+index*0.1}s both`, transform: hov ? "translateY(-4px)" : "none", boxShadow: hov ? `0 14px 34px rgba(0,0,0,0.18), 0 0 0 1.5px ${card.glow}` : `0 5px 20px ${card.glow}33`, transition:"transform 0.28s cubic-bezier(.2,.8,.3,1),box-shadow 0.28s ease" }}>
+      style={{ position:"relative", borderRadius:16, overflow:"hidden", height:170, cursor:"pointer", background:card.bg, animation:`cardEntrance 0.5s ease ${0.05+index*0.1}s both`, transform: hov ? "translateY(-4px)" : "none", boxShadow: hov ? `0 14px 34px rgba(0,0,0,0.18), 0 0 0 1.5px ${card.glow}` : `0 5px 20px ${card.glow}33`, transition:"transform 0.28s cubic-bezier(.2,.8,.3,1),box-shadow 0.28s ease" }}>
       <img src={card.img} alt={card.label} style={{ position:"absolute", width:"100%", height:"100%", objectFit:"cover", zIndex:1 }} />
       <div style={{ position:"absolute", bottom:0, left:0, right:0, height:70, background:"linear-gradient(to top,rgba(0,0,0,0.97),rgba(0,0,0,0.5) 65%,transparent)", zIndex:6 }}/>
       <div style={{ position:"absolute", inset:0, borderRadius:16, zIndex:7, pointerEvents:"none", border: hov ? `1.5px solid ${card.glow}` : "1.5px solid rgba(255,255,255,0.06)", transition:"border 0.28s" }}/>
@@ -567,7 +747,7 @@ function TrustFooter() {
   return (
     <>
       {/* Dark stats strip */}
-      <div style={{ margin:"0 12px 26px", background:"linear-gradient(135deg,#1a0a35,#0f0f28)", borderRadius:16, display:"grid", gridTemplateColumns:"1fr 1fr 1fr", overflow:"hidden", boxShadow:"0 8px 28px rgba(0,0,0,0.14)" }}>
+      <div style={{ margin:"0 8px 22px", background:"linear-gradient(135deg,#1a0a35,#0f0f28)", borderRadius:16, display:"grid", gridTemplateColumns:"1fr 1fr 1fr", overflow:"hidden", boxShadow:"0 8px 28px rgba(0,0,0,0.14)" }}>
         {stats.map((s,i) => (
           <div key={i} style={{ textAlign:"center", padding:"16px 8px 12px", borderRight:i<2?"1px solid #7c4dff20":"none" }}>
             <div style={{ fontSize:18, marginBottom:2 }}>{s.icon}</div>
@@ -637,7 +817,7 @@ function TrustFooter() {
 /* PageFooter */
 function PageFooter() {
   return (
-    <div style={{ margin:"0 12px 90px", background:"#fff", borderRadius:16, padding:"18px 16px", textAlign:"center", boxShadow:"0 4px 16px rgba(0,0,0,0.04)", border:"1.5px solid #ebebf4" }}>
+    <div style={{ margin:"0 8px 90px", background:"#fff", borderRadius:16, padding:"18px 16px", textAlign:"center", boxShadow:"0 4px 16px rgba(0,0,0,0.04)", border:"1.5px solid #ebebf4" }}>
       <div style={{ fontSize:11, color:"#888", fontWeight:600, letterSpacing:0.4, lineHeight:1.9 }}>
         © 2026 <span style={{ color:"#f90", fontWeight:700 }}>Mango Online Book</span>
         <span style={{ color:"#e0e0e0", margin:"0 8px" }}>•</span>
@@ -666,19 +846,18 @@ export default function App() {
       <div className="app-container">
 
         {/* ══ NAVBAR — dark ══ */}
-        <header style={{ background:"#0a0a20", padding:"14px 18px", display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:200, borderBottom:"2px solid #f9900044", boxShadow:"0 4px 24px rgba(0,0,0,0.7)" }}>
+        <header style={{ background:"#0a0a20", padding:"8px 16px", display:"flex", alignItems:"center", justifyContent:"space-between", position:"sticky", top:0, zIndex:200, borderBottom:"2px solid #f9900044", boxShadow:"0 4px 24px rgba(0,0,0,0.7)" }}>
           <div style={{ display:"flex", alignItems:"center", gap:10 }}>
             <span onClick={() => setMenuOpen(o=>!o)} style={{ fontSize:22, cursor:"pointer", color:"#fff", transition:"transform 0.35s", transform: menuOpen?"rotate(90deg)":"none", display:"inline-block" }}>☰</span>
             <div style={{ display:"flex", alignItems:"center", gap:8, cursor:"pointer" }} onClick={() => openWhatsApp("Hello!")}>
-              <img src="/logo.png" alt="Mango Online Book" style={{ height:"48px", width:"auto", objectFit:"contain", display:"block" }} />
-              <div style={{ display:"flex", flexDirection:"column", justifyContent:"center" }}>
-                <span style={{ color:"#fff", fontWeight:900, fontFamily:"'Oswald',sans-serif", fontSize:16, letterSpacing:1, lineHeight:1 }}>MANGO</span>
-                <span style={{ color:"#f90", fontWeight:700, fontSize:10, letterSpacing:2 }}>ONLINE BOOK</span>
+              <img src="/logo.png" alt="Mango Online Book" style={{ height:"62px", width:"auto", objectFit:"contain", display:"block", filter:"drop-shadow(0 0 10px rgba(255,170,0,0.7))" }} />
+              <div style={{ display:"flex", flexDirection:"column", lineHeight:1.1 }}>
+                <span style={{ fontSize:14, fontWeight:900, fontFamily:"'Oswald',sans-serif", background:"linear-gradient(135deg,#f90,#ffcc00)", WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent", letterSpacing:1.5 }}>MANGO</span>
+                <span style={{ fontSize:9, fontWeight:700, color:"#ccc", letterSpacing:2, textTransform:"uppercase" }}>ONLINE BOOK</span>
               </div>
             </div>
           </div>
           <div style={{ display:"flex", gap:8, alignItems:"center" }}>
-            <LiveBadge />
             <button className="header-btn" onClick={e=>{ addRipple(e); openWhatsApp("Hello, I want to login to my MangoPlay ID!"); }} style={{ background:"transparent", border:"2px solid #7c4dff", color:"#fff", borderRadius:7, padding:"6px 16px", fontWeight:700, cursor:"pointer", fontSize:13, transition:"all 0.2s" }}>Login</button>
             <button className="header-btn" onClick={e=>{ addRipple(e); openWhatsApp("Hello, I want to create a new ID on MangoPlay!"); }} style={{ background:"linear-gradient(90deg,#7c4dff,#b44dff)", border:"none", color:"#fff", borderRadius:7, padding:"6px 16px", fontWeight:700, cursor:"pointer", fontSize:13, boxShadow:"0 0 16px #7c4dff66", transition:"all 0.2s" }}>Sign up</button>
           </div>
@@ -706,22 +885,7 @@ export default function App() {
         {/* ════════════════════════════════════════
             LIGHT PAGE STARTS HERE — #eef1f7
         ════════════════════════════════════════ */}
-        <div style={{ background:"#eef1f7", paddingTop:24 }}>
-
-          {/* PROMO INFO BAR */}
-          <div style={{ margin:"0 12px 26px", background:"linear-gradient(135deg,#1a1535,#0f0f22)", borderRadius:16, padding:"13px 20px", boxShadow:"0 8px 24px rgba(0,0,0,0.10)" }}>
-            <div style={{ display:"flex", flexWrap:"wrap", alignItems:"center", justifyContent:"center", gap:"5px 14px", textAlign:"center" }}>
-              <span style={{ fontSize:12, fontWeight:900, color:"#f90", letterSpacing:1.5, fontFamily:"'Oswald',sans-serif", whiteSpace:"nowrap" }}>🥭 JOIN MANGO ONLINE BOOK TODAY</span>
-              <span style={{ color:"#ffffff25", fontSize:14 }}>•</span>
-              <span style={{ fontSize:11, fontWeight:700, color:"#ffd580", whiteSpace:"nowrap" }}>📲 GET YOUR ID ON WHATSAPP</span>
-              <span style={{ color:"#ffffff25", fontSize:14 }}>•</span>
-              <span style={{ fontSize:11, fontWeight:700, color:"#00e090", whiteSpace:"nowrap" }}>⚡ INSTANT WITHDRAWAL</span>
-              <span style={{ color:"#ffffff25", fontSize:14 }}>•</span>
-              <span style={{ fontSize:11, fontWeight:700, color:"#99bbff", whiteSpace:"nowrap" }}>🎧 24/7 SUPPORT</span>
-              <span style={{ color:"#ffffff25", fontSize:14 }}>•</span>
-              <span style={{ fontSize:11, fontWeight:700, color:"#f90", whiteSpace:"nowrap" }}>🏆 TRUSTED SINCE 2001</span>
-            </div>
-          </div>
+        <div style={{ background:"#eef1f7", paddingTop:6 }}>
 
           {/* GAME CARDS — white card */}
           <div className="sc">
@@ -755,7 +919,7 @@ export default function App() {
           </div>
 
           {/* IPL BANNER */}
-          <div style={{ margin:"0 12px 26px", background:"linear-gradient(90deg,#ff4d4d,#ff9933)", padding:"10px 14px", display:"flex", alignItems:"center", justifyContent:"space-between", borderRadius:14, boxShadow:"0 6px 22px rgba(255,120,0,0.28)" }}>
+          <div style={{ margin:"0 8px 22px", background:"linear-gradient(90deg,#ff4d4d,#ff9933)", padding:"10px 14px", display:"flex", alignItems:"center", justifyContent:"space-between", borderRadius:12, boxShadow:"0 6px 22px rgba(255,120,0,0.28)" }}>
             <div style={{ display:"flex", alignItems:"center", gap:10 }}>
               <span style={{ fontSize:28, animation:"float 2.5s ease-in-out infinite" }}>🏆</span>
               <div>
@@ -814,13 +978,16 @@ export default function App() {
           ))}
         </div>
 
-        {/* ══ SUPPORT BUBBLE ══ */}
-        <div style={{ position:"fixed", bottom:70, right:16, zIndex:150, animation:"float 3s ease-in-out infinite" }}>
-          <div style={{ background:"linear-gradient(135deg,#7c4dff,#b44dff)", borderRadius:"50%", width:50, height:50, display:"flex", alignItems:"center", justifyContent:"center", fontSize:22, cursor:"pointer", boxShadow:"0 0 22px #7c4dff99", transition:"transform 0.2s" }}
-            onMouseEnter={e=>e.currentTarget.style.transform="scale(1.15)"}
-            onMouseLeave={e=>e.currentTarget.style.transform="scale(1)"}
-            onClick={() => openWhatsApp("Hello, I need support on MangoPlay!")}>💬</div>
-          <div style={{ position:"absolute", top:-8, right:-4, background:"#e00", borderRadius:"50%", width:18, height:18, display:"flex", alignItems:"center", justifyContent:"center", fontSize:9, fontWeight:900, color:"#fff", animation:"liveGlow 1s infinite" }}>24</div>
+        {/* ══ FLOATING WHATSAPP BUTTON ══ */}
+        <div
+          onClick={() => openWhatsApp("Hello, I want to create my ID on MangoPlay!")}
+          style={{ position:"fixed", bottom:76, right:14, zIndex:150, cursor:"pointer", animation:"float 3s ease-in-out infinite" }}>
+          <div style={{ background:"linear-gradient(135deg,#25D366,#128C7E)", borderRadius:"50%", width:56, height:56, display:"flex", alignItems:"center", justifyContent:"center", fontSize:28, boxShadow:"0 4px 22px rgba(37,211,102,0.55), 0 0 0 3px rgba(37,211,102,0.15)", transition:"transform 0.2s" }}
+            onMouseEnter={e=>e.currentTarget.style.transform="scale(1.12)"}
+            onMouseLeave={e=>e.currentTarget.style.transform="scale(1)"}>
+            💬
+          </div>
+          <div style={{ position:"absolute", top:-6, right:-4, background:"#e00", borderRadius:"50%", width:18, height:18, display:"flex", alignItems:"center", justifyContent:"center", fontSize:8, fontWeight:900, color:"#fff", animation:"liveGlow 1s infinite", letterSpacing:0 }}>ID</div>
         </div>
 
         {/* ══ MODALS ══ */}
